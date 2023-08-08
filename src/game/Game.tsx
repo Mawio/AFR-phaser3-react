@@ -9,7 +9,8 @@ export default class IGame extends Component {
       width: window.innerWidth,
       height: window.innerHeight,
       parent: "phaser-container",
-      scene: [ExampleScene]
+      scene: [ExampleScene],
+      backgroundColor: '89CFF0'
     };
 
     new Phaser.Game(config);
@@ -20,6 +21,6 @@ export default class IGame extends Component {
   }
 
   public render() {
-    return <div id="phaser-game" />;
+    return <div id="phaser-container" />;
   }
 }

@@ -9,11 +9,11 @@ const driversSlice = createSlice({
   name: 'drivers',
   initialState,
   reducers: {
-    update(state, action) {
+    updateDriver(state, action) {
       state = state.map(el => el.name === action.payload.name ? action.payload : el)
     }
   }
 })
   
-export const { update } = driversSlice.actions
+export const { updateDriver } = driversSlice.actions
 export default driversSlice.reducer

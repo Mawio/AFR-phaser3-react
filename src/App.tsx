@@ -1,6 +1,6 @@
 import { Component } from "react";
-import Game from "./Game";
-import UI from "./UI";
+import Game from "./game/Game";
+import UI from "./UI/UI";
 import { Provider } from "react-redux";
 
 import store from "./store";
