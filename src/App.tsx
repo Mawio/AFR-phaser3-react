@@ -9,8 +9,8 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <UI />
         <Game />
+        <UI />
       </Provider>
     );
   }
