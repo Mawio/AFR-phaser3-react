@@ -9,18 +9,8 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div
-          style={{
-            display: "flex",
-            alignContent: "center",
-            justifyContent: "center",
-            flexDirection: "row",
-            height: "100vh"
-          }}
-        >
-          <UI />
-          <Game />
-        </div>
+        <UI />
+        <Game />
       </Provider>
     );
   }

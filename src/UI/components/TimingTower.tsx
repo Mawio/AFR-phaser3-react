@@ -5,7 +5,7 @@ function TimingTower() {
     const drivers = useSelector((state : RootState) => state.drivers)
     const listDrivers = drivers.map(driver =>
         <li key={driver.name}>
-          {driver.name}
+          {driver.name} {driver.distance}
         </li>
       );
       
