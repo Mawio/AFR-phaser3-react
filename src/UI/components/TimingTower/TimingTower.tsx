@@ -1,15 +1,14 @@
 import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from "../../store"
-import { Paper } from '@mui/material'
+import { RootState } from "@store"
+import { Paper, Stack } from '@mui/material'
+import DriverRow from "./DriverRow"
 
 function TimingTower() {
     const drivers = useSelector((state : RootState) => state.drivers, {
       equalityFn: shallowEqual,
     })
     const listDrivers = drivers.map(driver =>
-        <li key={driver.name}>
-          {driver.name} {driver.distance}
-        </li>
+        <DriverRow driver={driver} />
       );
       
       return (
@@ -18,9 +17,11 @@ function TimingTower() {
             margin: 15,
             width: "135px"
         }}>
-            <ul>{listDrivers}</ul>
+            <Stack spacing={1}>
+              {listDrivers}
+            </Stack>
           </Paper>
       );
-}
+} 
 
 export default TimingTower

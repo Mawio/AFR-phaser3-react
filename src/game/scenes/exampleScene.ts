@@ -1,7 +1,6 @@
 import { updateDriver } from "../../store/features/driversSlice"
 import Store from "../../store"
-import { Scene, Curves, GameObjects} from "phaser";
-import { useDispatch } from "react-redux";
+import { Scene, GameObjects} from "phaser";
 
 export default class ExampleScene extends Scene {
   private path : Phaser.Curves.Path
@@ -37,7 +36,7 @@ export default class ExampleScene extends Scene {
     this.path.draw(this.pathGraphics)
 
     const point = this.path.getPoint(this.position.t)
-    Store.dispatch(updateDriver({name: "Waka", distance: this.position.t}))
+    Store.dispatch(updateDriver({name: "Savoca", position: this.position.t>0.5 ? 1 : 2, distance: this.position.t}))
 
     this.pathGraphics.fillStyle(0xffff00, 1);
     this.pathGraphics.fillCircle(point.x, point.y, 16);

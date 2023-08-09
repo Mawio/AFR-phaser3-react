@@ -1,4 +1,4 @@
-import TimingTower from "./components/TimingTower"
+import TimingTower from "./components/TimingTower/TimingTower"
 
 function UI() {
   return (

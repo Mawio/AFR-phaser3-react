@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = [
-    {name: 'Waka', distance: 0},
-    {name: 'Savoca', distance: 0}
+    {name: 'Waka', position: 1, distance: 0},
+    {name: 'Savoca', position: 2, distance: 0}
 ]
 
 const driversSlice = createSlice({
