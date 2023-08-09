@@ -2,8 +2,8 @@ import TimingTower from "./components/TimingTower"
 
 function UI() {
   return (
-    <div>
-      <TimingTower />
-    </div>
+    <TimingTower />
   );
 }
+
+export default UI
