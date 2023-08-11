@@ -19,11 +19,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "src",
-    "paths": {
-      "@store": [ "store" ],
-      "@store/*": [ "store/*" ]
-    }
+    "baseUrl": "./src"
   },
   "include": [
     "src"

@@ -1,14 +1,12 @@
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from "@store"
+import { driversSelectors } from '/root/afr/src/store/features/driversSlice'
 import { Paper, Stack } from '@mui/material'
 import DriverRow from "./DriverRow"
+import { useSelector } from 'react-redux';
 
 function TimingTower() {
-    const drivers = useSelector((state : RootState) => state.drivers, {
-      equalityFn: shallowEqual,
-    })
+    const drivers = useSelector(driversSelectors.selectAll)
     const listDrivers = drivers.map(driver =>
-        <DriverRow driver={driver} />
+        <DriverRow key={driver.id} driver={driver} />
       );
       
       return (

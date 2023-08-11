@@ -1,11 +1,19 @@
-import { updateDriver } from "../../store/features/driversSlice"
-import Store from "../../store"
+import { updateDistance, Driver, addDrivers, driversSelectors} from "../../store/features/driversSlice"
+import { store } from "../../store"
 import { Scene, GameObjects} from "phaser";
+
+const exampleDrivers = [
+  {id: 0, name: 'Waka', position: 1, distance: 0},
+  //{id: 1, name: 'Savoca', position: 2, distance: 0}
+]
 
 export default class ExampleScene extends Scene {
   private path : Phaser.Curves.Path
-  private pathGraphics : GameObjects.Graphics
-  private position : {t: number}
+  private graphics : GameObjects.Graphics
+  private information : {t: number}[] = []
+  private drivers : Driver[]
+  private timeOfPause : number
+  private tween : Phaser.Tweens.Tween
 
   constructor() {
     super({
@@ -18,27 +26,53 @@ export default class ExampleScene extends Scene {
   }
 
   create() {
+    
+    this.game.events.on('hidden',function(){
+      this.timeOfPause = Date.now()
+      console.log('Hidden at time: ' + this.timeOfPause + ". The tween total elapsed is: " + this.tween.totalElapsed);
+    },this);
+  
+    this.game.events.on('visible',function(){
+        const timeLost = Date.now() - this.timeOfPause
+        const newElapsedTime = this.tween.totalElapsed + timeLost
+        this.tween.seek(newElapsedTime)
+        console.log('Visible at time: ' + Date.now() + " with time lost: " + timeLost + ". The tween elapsed time is: " + this.tween.totalElapsed)
+    },this);
+
+    store.dispatch(addDrivers(exampleDrivers))
     this.path = new Phaser.Curves.Path().fromJSON(this.cache.json.get('track1'))
-    this.position = {t: 0}
-    this.pathGraphics = this.add.graphics()
-    this.tweens.add({
-      targets: this.position,
-      t: 1,
-      duration: 5000
+    this.graphics = this.add.graphics()
+
+    this.drivers = driversSelectors.selectAll(store.getState())
+    this.drivers.forEach(() => {
+      this.information.push({t: 0})
     })
+
+    this.tween = this.tweens.add({
+      targets: this.information[0],
+      t: 1,
+      duration: 8000,
+      loop: 1
+    })
+
+    console.log("The tween duration is: " + this.tween.totalDuration)
   }
 
   update() {
-    this.pathGraphics.clear();
-    this.pathGraphics.lineStyle(3, 0xff00ff);
-    this.pathGraphics.setScale(0.8)
-    this.pathGraphics.setPosition(400,20)
-    this.path.draw(this.pathGraphics)
+    this.graphics.clear();
+    this.graphics.lineStyle(3, 0xff00ff);
+    this.graphics.setScale(0.8)
+    this.graphics.setPosition(400,20)
+    this.path.draw(this.graphics)
 
-    const point = this.path.getPoint(this.position.t)
-    Store.dispatch(updateDriver({name: "Savoca", position: this.position.t>0.5 ? 1 : 2, distance: this.position.t}))
+    this.drivers.forEach(driver => {
+      const information = this.information[this.drivers.indexOf(driver)]
+      store.dispatch(updateDistance({id:driver.id, distance: information.t}))
+      const point = this.path.getPoint(information.t)
+      this.graphics.fillStyle(0xffff00, 1);
+      this.graphics.fillCircle(point.x, point.y, 16);
+      
+    })
 
-    this.pathGraphics.fillStyle(0xffff00, 1);
-    this.pathGraphics.fillCircle(point.x, point.y, 16);
   }
 }
