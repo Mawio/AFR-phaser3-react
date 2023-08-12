@@ -13,7 +13,7 @@ function TimingTower() {
         <Paper style = {{
             position: "absolute",
             margin: 15,
-            width: "135px"
+            width: "175px"
         }}>
             <Stack spacing={1}>
               {listDrivers}

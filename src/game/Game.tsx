@@ -4,6 +4,7 @@ import { Component } from "react";
 
 export default class Game extends Component {
   componentDidMount() {
+    console.log("Creating game...")
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
       width: window.innerWidth,
@@ -14,6 +15,7 @@ export default class Game extends Component {
     };
 
     new Phaser.Game(config);
+    console.log("Game created.")
   }
 
   shouldComponentUpdate() {

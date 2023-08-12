@@ -4,7 +4,7 @@ import { Scene, GameObjects} from "phaser";
 
 const exampleDrivers = [
   {id: 0, name: 'Waka', position: 1, distance: 0},
-  //{id: 1, name: 'Savoca', position: 2, distance: 0}
+  {id: 1, name: 'Savoca', position: 2, distance: 0}
 ]
 
 export default class ExampleScene extends Scene {
