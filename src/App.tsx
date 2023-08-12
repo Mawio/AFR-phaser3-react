@@ -20,8 +20,8 @@ function App() {
       return <div>Error!</div>;
     }
 
-    database.parseFlags(data[0])
-    database.parseRaces(data[1])
+    database.parseFlags(data[0].data)
+    database.parseRaces(data[1].data)
   
     return (
       <Provider store={store}>
