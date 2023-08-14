@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import ExampleScene from "./scenes/exampleScene";
+import RaceScene from "./scenes/RaceScene";
 import { Component } from "react";
 
 export default class Game extends Component {
@@ -10,7 +10,7 @@ export default class Game extends Component {
       width: window.innerWidth,
       height: window.innerHeight,
       parent: "phaser-container",
-      scene: [ExampleScene],
+      scene: [RaceScene],
       backgroundColor: '89CFF0',
     };
 
