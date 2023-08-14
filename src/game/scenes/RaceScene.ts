@@ -1,23 +1,31 @@
 import { updateDistance, Driver, addDrivers, driversSelectors} from "../../store/features/driversSlice"
 import { store } from "../../store"
 import { Scene, GameObjects} from "phaser";
+import Timeline from "../Timeline"
 
 const exampleDrivers = [
-  {id: 0, name: 'Waka', position: 1, distance: 0},
-  {id: 1, name: 'Savoca', position: 2, distance: 0}
+  {id: 0, name: 'Waka', position: 1, distance: 0, totalDistance: 0},
+  {id: 1, name: 'Savoca', position: 2, distance: 0, totalDistance: 0}
 ]
 
-export default class ExampleScene extends Scene {
+class DriverHandle {
+  constructor(    
+    public driver: Driver,
+    public timeline: Timeline
+  ) 
+  {}
+
+}
+
+export default class RaceScene extends Scene {
   private path : Phaser.Curves.Path
   private graphics : GameObjects.Graphics
-  private information : {t: number}[] = []
-  private drivers : Driver[]
+  private driversHandles : DriverHandle[]
   private timeOfPause : number
-  private tween : Phaser.Tweens.Tween
 
   constructor() {
     super({
-      key: 'ExampleScene'
+      key: 'RaceScene'
     })
   }
 
@@ -29,50 +37,42 @@ export default class ExampleScene extends Scene {
     
     this.game.events.on('hidden',function(){
       this.timeOfPause = Date.now()
-      console.log('Hidden at time: ' + this.timeOfPause + ". The tween total elapsed is: " + this.tween.totalElapsed);
     },this);
   
     this.game.events.on('visible',function(){
         const timeLost = Date.now() - this.timeOfPause
-        const newElapsedTime = this.tween.totalElapsed + timeLost
-        this.tween.seek(newElapsedTime)
-        console.log('Visible at time: ' + Date.now() + " with time lost: " + timeLost + ". The tween elapsed time is: " + this.tween.totalElapsed)
+        this.timeline.update(timeLost)
     },this);
 
     store.dispatch(addDrivers(exampleDrivers))
     this.path = new Phaser.Curves.Path().fromJSON(this.cache.json.get('track1'))
     this.graphics = this.add.graphics()
 
-    this.drivers = driversSelectors.selectAll(store.getState())
-    this.drivers.forEach(() => {
-      this.information.push({t: 0})
-    })
 
-    this.tween = this.tweens.add({
-      targets: this.information[0],
-      t: 1,
-      duration: 8000,
-      loop: 1
-    })
-
-    console.log("The tween duration is: " + this.tween.totalDuration)
   }
 
-  update() {
-    this.graphics.clear();
+  update(time, delta) {
+    this.graphics.clear()
+    this.drawPath()
+
+    this.driversHandles.forEach(driverHandle => {
+      driverHandle.timeline.update(delta)
+      const driver = driverHandle.driver
+      this.drawCar(this.path.getPoint(driver.distance))
+      store.dispatch(updateDistance({id:driver.id, distance: driver.distance}))
+    })
+
+  }
+
+  drawCar(point: Phaser.Math.Vector2) {
+    this.graphics.fillStyle(0xffff00, 1);
+    this.graphics.fillCircle(point.x, point.y, 16);
+  }
+
+  drawPath() {
     this.graphics.lineStyle(3, 0xff00ff);
     this.graphics.setScale(0.8)
     this.graphics.setPosition(400,20)
     this.path.draw(this.graphics)
-
-    this.drivers.forEach(driver => {
-      const information = this.information[this.drivers.indexOf(driver)]
-      store.dispatch(updateDistance({id:driver.id, distance: information.t}))
-      const point = this.path.getPoint(information.t)
-      this.graphics.fillStyle(0xffff00, 1);
-      this.graphics.fillCircle(point.x, point.y, 16);
-      
-    })
-
   }
 }

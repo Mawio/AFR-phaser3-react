@@ -6,6 +6,7 @@ class Database
 
     private flags : {url: string, location: string}[]
     private races : {location: string, name: string, raceID: string, series: string, track : string, weather: string, week: string, year: string}[]
+    private lapTimes : Map<number, number[]>
 
     public parseFlags(flags) : void {
         this.flags = flags
@@ -13,6 +14,14 @@ class Database
 
     public parseRaces(races) : void {
         this.races = races
+    }
+
+    public getLaptimeMs(driverID: number, lap: number) : number {
+        return this.getLaptimeMs(driverID, lap) * 1000
+    }
+
+    public getLaptimeS(driverID: number, lap: number) : number {
+        return this.lapTimes.get(driverID)[lap+1]
     }
 
 }
