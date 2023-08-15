@@ -1,7 +1,9 @@
 class Database
 {
     private static _instance: Database;
-    private constructor() {}
+    private constructor() {
+        this.lapTimes = new Map<number, number[]>().set(0, [0, 15, 16, 20]).set(1, [1, 14, 21, 15])
+    }
     public static get Instance() { return this._instance || (this._instance = new this()); }
 
     private flags : {url: string, location: string}[]
@@ -16,14 +18,13 @@ class Database
         this.races = races
     }
 
-    public getLaptimeMs(driverID: number, lap: number) : number {
-        return this.getLaptimeMs(driverID, lap) * 1000
+    public parseLapTimes(lapTimes) : void {
+
     }
 
-    public getLaptimeS(driverID: number, lap: number) : number {
-        return this.lapTimes.get(driverID)[lap+1]
+    public getLaptimes(driverID: number): number[] {
+        return this.lapTimes.get(driverID)
     }
-
 }
 
 export default Database.Instance;

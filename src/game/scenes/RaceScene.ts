@@ -2,6 +2,7 @@ import { updateDistance, Driver, addDrivers, driversSelectors} from "../../store
 import { store } from "../../store"
 import { Scene, GameObjects} from "phaser";
 import Timeline from "../Timeline"
+import Database from "Database";
 
 const exampleDrivers = [
   {id: 0, name: 'Waka', position: 1, distance: 0, totalDistance: 0},
@@ -9,12 +10,12 @@ const exampleDrivers = [
 ]
 
 class DriverHandle {
-  constructor(    
-    public driver: Driver,
-    public timeline: Timeline
-  ) 
-  {}
-
+  public timeline: Timeline
+  public driver: Driver
+  constructor(driver: Driver){
+    this.driver = structuredClone(driver)
+    this.timeline = new Timeline(this.driver, Database.getLaptimes(driver.id))
+  }
 }
 
 export default class RaceScene extends Scene {
@@ -27,6 +28,7 @@ export default class RaceScene extends Scene {
     super({
       key: 'RaceScene'
     })
+    this.driversHandles = []
   }
 
   preload() {
@@ -41,13 +43,20 @@ export default class RaceScene extends Scene {
   
     this.game.events.on('visible',function(){
         const timeLost = Date.now() - this.timeOfPause
-        this.timeline.update(timeLost)
+        this.driversHandles.forEach(driverHandle => {
+          driverHandle.timeline.update(timeLost)
+        });
     },this);
 
     store.dispatch(addDrivers(exampleDrivers))
     this.path = new Phaser.Curves.Path().fromJSON(this.cache.json.get('track1'))
     this.graphics = this.add.graphics()
 
+    const drivers = driversSelectors.selectAll(store.getState())
+
+    drivers.forEach(driver => {
+      this.driversHandles.push(new DriverHandle(driver))
+    })
 
   }
 
