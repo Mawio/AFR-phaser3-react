@@ -31,6 +31,7 @@ export default class Timeline{
     ){
         this._lapCounter = this._totalElapsed = this._elapsed = 0
         this.target.distance = this.startingDistance
+        this.target.totalDistance = this.startingDistance - 1
     }
 
     update(delta): boolean {
@@ -41,6 +42,7 @@ export default class Timeline{
         if(delta >= remainingTime) {
             delta -= remainingTime
             this._totalElapsed += remainingTime
+            this.target.totalDistance += (1 - this.target.distance)
             this.target.distance = 1
             if(this.nextLap()) {
                 return this.update(delta)
@@ -49,7 +51,9 @@ export default class Timeline{
             this._totalElapsed += delta
             this._elapsed += delta
             const speed = this.lapLength/this.duration
-            this.target.distance += speed*delta
+            const movement = speed*delta
+            this.target.distance += movement
+            this.target.totalDistance += movement
             return true
         }
     }

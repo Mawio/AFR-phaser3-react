@@ -1,9 +1,13 @@
-import Game from "./game/Game";
-import UI from "./UI/UI";
+import Race from "./routes/Race";
 import { Provider } from "react-redux";
 import useGoogleSheets from 'use-google-sheets';
-import { store } from "./store";
+import { store } from "./store/Store";
 import database from "Database"
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import ErrorPage from "routes/ErrorPage";
 
 function App() {
     const { data, loading, error } = useGoogleSheets({
@@ -17,16 +21,23 @@ function App() {
     }
   
     if (error) {
-      return <div>Error!</div>;
+      return <ErrorPage />;
     }
 
     database.parseFlags(data[0].data)
     database.parseRaces(data[1].data)
+
+    const router = createBrowserRouter([
+      {
+        path: "/",
+        element: <Race />,
+        errorElement: <ErrorPage />
+      },
+    ]);
   
     return (
       <Provider store={store}>
-        <Game />
-        <UI />
+        <RouterProvider router={router} />
       </Provider>
     );
 }

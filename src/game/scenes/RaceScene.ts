@@ -1,5 +1,5 @@
 import { updateDistance, Driver, addDrivers, driversSelectors} from "../../store/features/driversSlice"
-import { store } from "../../store"
+import { store } from "../../store/Store"
 import { Scene, GameObjects} from "phaser";
 import Timeline from "../Timeline"
 import Database from "Database";

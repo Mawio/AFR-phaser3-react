@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { RootState } from "../../store"
+import { RootState } from "../Store"
 
 export type Driver = {id: number, name: string, position: number, distance: number, totalDistance: number}
 
