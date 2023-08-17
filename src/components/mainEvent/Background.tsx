@@ -9,7 +9,7 @@ function Background() {
           playsInline
           src="https://drive.google.com/uc?export=download&id=1btkqOmFPkwISuagpABcJdTLYdZWoyXYA"
           autoPlay loop muted
-          heigth={"100vh"}
+          height={"100vh"}
         >
           <ControlBar disableCompletely={true} />
           <Shortcut clickable={false} dblclickable={false}/>
