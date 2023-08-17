@@ -15,12 +15,9 @@ function MainEvent() {
 
   // This function updates the state thus re-render components
   const resizeHandler = () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
     setSize({
-      width: width,
-      height: height,
+      width: window.innerWidth,
+      height: window.innerHeight,
     });
   };
 
