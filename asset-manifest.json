@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/AFR-phaser3-react/static/css/main.1fa19e99.css",
-    "main.js": "/AFR-phaser3-react/static/js/main.61a51de9.js",
+    "main.css": "/AFR-phaser3-react/static/css/main.72c77e8c.css",
+    "main.js": "/AFR-phaser3-react/static/js/main.f0a89eff.js",
     "index.html": "/AFR-phaser3-react/index.html",
-    "main.1fa19e99.css.map": "/AFR-phaser3-react/static/css/main.1fa19e99.css.map",
-    "main.61a51de9.js.map": "/AFR-phaser3-react/static/js/main.61a51de9.js.map"
+    "main.72c77e8c.css.map": "/AFR-phaser3-react/static/css/main.72c77e8c.css.map",
+    "main.f0a89eff.js.map": "/AFR-phaser3-react/static/js/main.f0a89eff.js.map"
   },
   "entrypoints": [
-    "static/css/main.1fa19e99.css",
-    "static/js/main.61a51de9.js"
+    "static/css/main.72c77e8c.css",
+    "static/js/main.f0a89eff.js"
   ]
 }
