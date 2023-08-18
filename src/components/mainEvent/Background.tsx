@@ -1,15 +1,20 @@
 import { Player, ControlBar, Shortcut, BigPlayButton } from 'video-react';
+import "./MainEvent.css"
 
-function Background() {
+function Background(props) {
+
+  const differences = {widthDifference: 1920-props.dimensions.width, heigthDifference: 1080-props.dimensions.height}
 
   return (
     <div className="dark-overlay">
-      <div style={{height:"100vh", overflow:"hidden", display:'flex', zIndex:-1, position: "relative"}}>
+      <div style={{overflow:"hidden", display:'flex', zIndex:-1, position: "absolute"}}>
         <Player
           playsInline
           src="https://drive.google.com/uc?export=download&id=1btkqOmFPkwISuagpABcJdTLYdZWoyXYA"
           autoPlay loop muted
-          height={"100vh"}
+          fluid={false}
+          height={window.innerHeight}
+          width={window.innerWidth}
         >
           <ControlBar disableCompletely={true} />
           <Shortcut clickable={false} dblclickable={false}/>

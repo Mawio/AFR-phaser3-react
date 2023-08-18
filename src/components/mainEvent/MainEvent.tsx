@@ -1,15 +1,22 @@
-import { Typography } from '@mui/material';
-import Background from './Background';
 import "./MainEvent.css"
 import React, { useEffect, useState } from 'react';
+import Background from './Background';
+import MainTag from './MainTag';
+
+interface Size {
+  width: number;
+  height: number;
+}
 
 function MainEvent() {
 
-  const [zoom, setZoom] = useState<number>(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
+  const [size, setSize] = useState<Size>({height: window.innerHeight, width: window.innerWidth});
+  let zoom : number = Math.min(window.innerHeight / 1080, window.innerWidth / 1920)
 
   // This function updates the state thus re-render components
   const resizeHandler = () => {
-    setZoom(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
+    setSize({height: window.innerHeight, width: window.innerWidth});
+    zoom = Math.min(window.innerHeight / 1080, window.innerWidth / 1920)
   };
 
   // Listening for the window resize event
@@ -25,10 +32,8 @@ function MainEvent() {
 
   return (
     <>
-      <Background />
-      <div id='main-event-tag' style={{zoom: zoom}}>
-        <Typography color={'white'} fontSize={"70px"} textAlign={"center"}> British Grand Prix </Typography>
-      </div>
+      <Background dimensions={size}/>
+      <MainTag zoom={zoom} />
     </>
   );
 }
