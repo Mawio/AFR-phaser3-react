@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/AFRDev/static/css/main.1fa19e99.css",
-    "main.js": "/AFRDev/static/js/main.ca5f3251.js",
-    "index.html": "/AFRDev/index.html",
-    "main.1fa19e99.css.map": "/AFRDev/static/css/main.1fa19e99.css.map",
-    "main.ca5f3251.js.map": "/AFRDev/static/js/main.ca5f3251.js.map"
+    "main.css": "/AFR-phaser3-react/static/css/main.1fa19e99.css",
+    "main.js": "/AFR-phaser3-react/static/js/main.ca5f3251.js",
+    "index.html": "/AFR-phaser3-react/index.html",
+    "main.1fa19e99.css.map": "/AFR-phaser3-react/static/css/main.1fa19e99.css.map",
+    "main.ca5f3251.js.map": "/AFR-phaser3-react/static/js/main.ca5f3251.js.map"
   },
   "entrypoints": [
     "static/css/main.1fa19e99.css",
