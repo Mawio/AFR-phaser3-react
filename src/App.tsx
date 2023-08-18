@@ -13,7 +13,7 @@ function App() {
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/AFR-phaser3-react/",
       element: <Root />,
       errorElement: <ErrorPage />,
       children: [

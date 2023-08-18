@@ -3,20 +3,13 @@ import React, { useEffect, useState } from 'react';
 import Background from './Background';
 import MainTag from './MainTag';
 
-interface Size {
-  width: number;
-  height: number;
-}
-
 function MainEvent() {
 
-  const [size, setSize] = useState<Size>({height: window.innerHeight, width: window.innerWidth});
-  let zoom : number = Math.min(window.innerHeight / 1080, window.innerWidth / 1920)
+  const [zoom, setZoom] = useState<number>(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
 
   // This function updates the state thus re-render components
   const resizeHandler = () => {
-    setSize({height: window.innerHeight, width: window.innerWidth});
-    zoom = Math.min(window.innerHeight / 1080, window.innerWidth / 1920)
+    setZoom(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
   };
 
   // Listening for the window resize event
@@ -32,7 +25,7 @@ function MainEvent() {
 
   return (
     <>
-      <Background dimensions={size}/>
+      <Background/>
       <MainTag zoom={zoom} />
     </>
   );
