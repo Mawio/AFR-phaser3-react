@@ -6,7 +6,6 @@ function evaluateSize(width, height) : Size {
   if((width / height) > (16/9)) {
     return {width: width, height: width*9/16}
   } else {
-    console.log({height: height, width: height*16/9})
     return {height: height, width: height*16/9}
   }
 }
@@ -21,20 +20,20 @@ function Background() {
   // The size of the window
   const [size, setSize] = useState<Size>({width: window.innerWidth, height: window.innerHeight});
   let trueSize : Size = evaluateSize(size.width, size.height)
+ 
 
   // This function updates the state thus re-render components
   const resizeHandler = () => {
-    const width = window.outerWidth;
-    const height = window.outerHeight
+    const overlay = document.getElementsByClassName("dark-overlay")[0]
+    const width = overlay.clientWidth;
+    const height = overlay.clientHeight
 
     setSize({
       width: width,
       height: height,
     });
     
-    console.log(evaluateSize(width, height))
     trueSize = evaluateSize(width, height)
-    console.log(trueSize.width + "x" + trueSize.height)
   };
 
   // Listening for the window resize event
@@ -53,7 +52,7 @@ function Background() {
       <div style={{overflow:"hidden", display:'flex', zIndex:-1, position: "absolute", height: "100%", width: "100%"}}>
         <Player
           playsInline
-          src="https://drive.google.com/uc?export=download&id=1btkqOmFPkwISuagpABcJdTLYdZWoyXYA"
+          src="https://drive.google.com/uc?id=1btkqOmFPkwISuagpABcJdTLYdZWoyXYA"
           autoPlay loop muted
           fluid={false}
           height={trueSize.height}

@@ -31,3 +31,15 @@
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
 }
+
+#main-tag-logo{
+    max-width: 750px;
+    max-height: 750px;
+    transform:translateY(-18%)
+}
+
+#main-tag-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
