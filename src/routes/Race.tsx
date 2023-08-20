@@ -1,4 +1,4 @@
-import Game from "components/generic/Game";
+import Game from "components/Game";
 import TimingTower from "../components/timingTower/TimingTower"
 
 function Race() {
