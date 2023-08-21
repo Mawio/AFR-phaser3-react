@@ -23,9 +23,6 @@ export default class Track{
     public update(): void{
         this._scale = Math.min(this.scene.cameras.main.width / 3624, this.scene.cameras.main.height / 2160) * 2
         this.sprite.setScale(this._scale)
-
-        //this.sprite.setPosition(this.scene.screenCenterX, this.scene.screenCenterY)
-        //this.scene.cameras.main.setPosition()
     }
 
     public get width(): number {

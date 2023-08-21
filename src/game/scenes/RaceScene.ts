@@ -72,7 +72,7 @@ export default class RaceScene extends Scene {
 
   drawPath() {
     this.graphics.setScale(this.path.scale)
-    this.graphics.lineStyle(3, 0xff00ff);
+    this.graphics.lineStyle(0, 0xff00ff);
     this.path.draw(this.graphics)
   }
 
@@ -115,7 +115,6 @@ export default class RaceScene extends Scene {
               //this.cameras.main.pan(this.cameras.main.centerX + (pointer.worldX - this.cameras.main.centerX)*0.05, this.cameras.main.centerY + (pointer.worldY - this.cameras.main.centerY)*0.05, 0, "Power2");
           }
       }
-
       //this.cameras.main.centerOn(pointer.worldX, pointer.worldY);
     });
 
