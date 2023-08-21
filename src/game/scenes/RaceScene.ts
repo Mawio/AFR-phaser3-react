@@ -71,7 +71,6 @@ export default class RaceScene extends Scene {
   }
 
   drawPath() {
-    this.graphics.setPosition(...Object.values(this.path.position))
     this.graphics.setScale(this.path.scale)
     this.graphics.lineStyle(3, 0xff00ff);
     this.path.draw(this.graphics)
@@ -118,14 +117,13 @@ export default class RaceScene extends Scene {
       }
 
       //this.cameras.main.centerOn(pointer.worldX, pointer.worldY);
-    
     });
 
     this.input.on('pointermove', (pointer) => {
         if (!pointer.isDown) return;
 
-        this.cameras.main.scrollX -= (pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom;
-        this.cameras.main.scrollY -= (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom;
+        this.cameras.main.followOffset.x += (pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom;
+        this.cameras.main.followOffset.y += (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom;
     });
   }
 }

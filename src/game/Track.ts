@@ -17,12 +17,15 @@ export default class Track{
         this.sprite = this.scene.add.sprite(this.scene.screenCenterX, this.scene.screenCenterY, 'track');
         this.sprite.setDepth(-1)
         this.sprite.setScale(this._scale)
+        this.scene.cameras.main.startFollow(this.sprite)
     }
 
     public update(): void{
         this._scale = Math.min(this.scene.cameras.main.width / 3624, this.scene.cameras.main.height / 2160) * 2
-        this.sprite.setPosition(this.scene.screenCenterX, this.scene.screenCenterY)
         this.sprite.setScale(this._scale)
+
+        //this.sprite.setPosition(this.scene.screenCenterX, this.scene.screenCenterY)
+        //this.scene.cameras.main.setPosition()
     }
 
     public get width(): number {
