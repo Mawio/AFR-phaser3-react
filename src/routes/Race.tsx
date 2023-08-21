@@ -1,11 +1,11 @@
-import Game from "components/Game";
-import TimingTower from "../components/timingTower/TimingTower"
+import Game from "components/raceInterface/Game";
+import RaceInterface from "components/raceInterface/RaceInterface";
 
 function Race() {
   return (
     <>
       <Game />
-      <TimingTower />
+      <RaceInterface />
     </>
   );
 }

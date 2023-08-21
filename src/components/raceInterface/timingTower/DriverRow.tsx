@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import NumberedSquare from '../generic/NumberedSquare'
+import NumberedSquare from '../../generic/NumberedSquare'
 
 function DriverRow(props) {
 

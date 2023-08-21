@@ -1,5 +1,5 @@
 import Phaser from "phaser";
-import RaceScene from "../game/scenes/RaceScene";
+import RaceScene from "../../game/scenes/RaceScene";
 import { Component } from "react";
 
 export default class Game extends Component {
