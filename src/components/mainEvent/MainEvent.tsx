@@ -25,7 +25,7 @@ function MainEvent() {
 
   return (
     <>
-      <Background/>
+      <Background />
       <MainTag zoom={zoom} />
     </>
   );
