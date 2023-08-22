@@ -20,15 +20,12 @@ export default class Path{
         this.update(width, height)
     }
 
-    public get scale(): number{
-        return this._scale
-    }
-
     public getPoint(distance: number) {
         return this.path.getPoint(distance)
     }
 
     public draw(graphics: GameObjects.Graphics) {
+        graphics.setScale(this._scale)
         graphics.setPosition(this.position.x, this.position.y)
         return this.path.draw(graphics)
     }

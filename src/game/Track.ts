@@ -13,10 +13,9 @@ export default class Track{
     }
 
     public initialize(): void {
-        this._scale = Math.min(this.scene.cameras.main.width / 3624, this.scene.cameras.main.height / 2160) * 2
         this.sprite = this.scene.add.sprite(this.scene.screenCenterX, this.scene.screenCenterY, 'track');
         this.sprite.setDepth(-1)
-        this.sprite.setScale(this._scale)
+        this.update()
         this.scene.cameras.main.startFollow(this.sprite)
     }
 
@@ -33,11 +32,7 @@ export default class Track{
         return this.sprite.height*this._scale
     }
 
-    public get x(): number {
-        return this.sprite.x
-    }
-
-    public get y(): number {
-        return this.sprite.y
+    public get position(): Phaser.Math.Vector2 {
+        return new Phaser.Math.Vector2(this.sprite.x, this.sprite.y)
     }
 }

@@ -11,7 +11,7 @@ export default class Game extends Component {
       height: window.innerHeight,
       parent: "phaser-container",
       scene: [RaceScene],
-      backgroundColor: '89CFF0',
+      backgroundColor: '071701',
     };
 
     new Phaser.Game(config);
