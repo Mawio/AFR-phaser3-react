@@ -45,6 +45,7 @@ function Background() {
     return () => {
       window.removeEventListener('resize', resizeHandler);
     }
+    // eslint-disable-next-line
   }, []);
 
   return (

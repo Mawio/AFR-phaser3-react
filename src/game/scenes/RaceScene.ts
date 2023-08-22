@@ -49,14 +49,14 @@ export default class RaceScene extends Scene {
     })
 
     this.track.initialize()
-    this.path.initialize()
-    this.path.update(this.track.width, this.track.height)
+    this.path.initialize(this.track.width, this.track.height)
     this.inputHandling()
   }
 
   update(time, delta) {
     this.graphics.clear()
     this.drawPath()
+
     this.driversHandles.forEach(driverHandle => {
       driverHandle.timeline.update(delta)
       const driver = driverHandle.driver
@@ -100,16 +100,17 @@ export default class RaceScene extends Scene {
   inputHandling() {
     this.input.on("wheel",  (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
 
+      var newZoom = 0
       if (deltaY > 0) {
-          var newZoom = this.cameras.main.zoom -.075;
-          if (newZoom > 0.3) {
+          newZoom = this.cameras.main.zoom -.075;
+          if (newZoom > 0.6) {
               this.cameras.main.zoom = newZoom;   
               //this.cameras.main.pan(this.cameras.main.centerX + (pointer.worldX - this.cameras.main.centerX)*0.05, this.cameras.main.centerY + (pointer.worldY - this.cameras.main.centerY)*0.05, 0, "Power2");  
           }
       }
     
       if (deltaY < 0) {
-          var newZoom = this.cameras.main.zoom +.075;
+          newZoom = this.cameras.main.zoom +.075;
           if (newZoom < 5) {
               this.cameras.main.zoom = newZoom;     
               //this.cameras.main.pan(this.cameras.main.centerX + (pointer.worldX - this.cameras.main.centerX)*0.05, this.cameras.main.centerY + (pointer.worldY - this.cameras.main.centerY)*0.05, 0, "Power2");
@@ -121,8 +122,28 @@ export default class RaceScene extends Scene {
     this.input.on('pointermove', (pointer) => {
         if (!pointer.isDown) return;
 
-        this.cameras.main.followOffset.x += (pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom;
-        this.cameras.main.followOffset.y += (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom;
+        const currentPosition = {x: this.track.x - this.cameras.main.followOffset.x, y: this.track.y - this.cameras.main.followOffset.y}
+        const nextPosition = this.clamp(currentPosition.x - (pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom, currentPosition.y - (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom)
+        const offset = {x: this.track.x - nextPosition.x, y: this.track.y - nextPosition.y}
+        this.cameras.main.followOffset.x = offset.x
+        this.cameras.main.followOffset.y = offset.y
     });
   }
+
+  clamp(x: number, y: number) : {x: number, y: number} {
+    return {x: this.clampX(x), y: this.clampY(y)}
+  }
+
+  clampX(x: number) : number {
+    const min = this.track.x - this.track.width / 2 + this.cameras.main.displayWidth / 2
+    const max = this.track.x + this.track.width / 2 - this.cameras.main.displayWidth / 2
+    return Phaser.Math.Clamp(x, min, max)
+  }
+
+  clampY(y: number) : number {
+    const min = this.track.y - this.track.height / 2 + this.cameras.main.displayHeight / 2
+    const max = this.track.y + this.track.height / 2 - this.cameras.main.displayHeight / 2
+    return Phaser.Math.Clamp(y, min, max)
+  }
+
 }

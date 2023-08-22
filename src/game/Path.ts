@@ -14,9 +14,10 @@ export default class Path{
         scene.load.json('track1', path)
     }
 
-    public initialize() : void {
+    public initialize(width: number, height: number) : void {
         this.path = new Phaser.Curves.Path().fromJSON(this.scene.cache.json.get('track1'))
         this.center = {x: this.scene.screenCenterX, y: this.scene.screenCenterY}
+        this.update(width, height)
     }
 
     public get scale(): number{

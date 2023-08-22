@@ -33,5 +33,11 @@ export default class Track{
         return this.sprite.height*this._scale
     }
 
+    public get x(): number {
+        return this.sprite.x
+    }
 
+    public get y(): number {
+        return this.sprite.y
+    }
 }
