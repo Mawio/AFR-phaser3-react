@@ -1,13 +1,20 @@
 import EventSelector from "components/EventSelector";
 import MainEvent from "components/mainEvent/MainEvent";
-import { useVisible } from "./Root";
+import { usePreloading } from "./Root";
+import React from "react";
 
 function Landing() {
 
-    const className = useVisible().visible? "" : "hidden"
+    if (usePreloading().preloading)
+        return (
+            <div className={"hidden"}>
+                <MainEvent />
+                <EventSelector />
+            </div>
+        );
 
     return (
-        <div className={className}>
+        <div>
             <MainEvent />
             <EventSelector />
         </div>
