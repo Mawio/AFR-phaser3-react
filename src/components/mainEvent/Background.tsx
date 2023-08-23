@@ -1,4 +1,4 @@
-import { Player, ControlBar, Shortcut, BigPlayButton, LoadingSpinner } from 'video-react';
+import { Player, ControlBar, Shortcut, BigPlayButton } from 'video-react';
 import "./MainEvent.css"
 import React, { useEffect, useState } from 'react'; 
 

@@ -5,6 +5,7 @@ import { Scene, GameObjects} from "phaser";
 import Path from "game/Path";
 import Track from "game/Track";
 import $ from "jquery";
+import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 
 const exampleDrivers = [
   {id: 0, name: 'Waka', position: 1, distance: 0, totalDistance: 0},
@@ -18,6 +19,7 @@ export default class RaceScene extends Scene {
   private driversHandles : DriverHandle[]
   private timeOfPause : number
   private trackBackground : GameObjects.Sprite
+  private rexGestures : GesturesPlugin
 
   constructor() {
     super({
@@ -47,6 +49,13 @@ export default class RaceScene extends Scene {
     drivers.forEach(driver => {
       this.driversHandles.push(new DriverHandle(driver))
     })
+
+    var pinch = this.rexGestures.add.pinch(this);
+    pinch.on('pinch', function (dragScale) {
+      console.log("Pinch")
+      var scaleFactor = dragScale.scaleFactor;
+      this.zoomCameraClamped(this.cameras.main.zoom * scaleFactor - this.cameras.main.zoom);
+    }, this)
 
     this.track.initialize()
     this.path.initialize(this.track.width, this.track.height)
