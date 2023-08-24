@@ -8,6 +8,7 @@ import {
 import ErrorPage from "routes/ErrorPage";
 import Landing from "routes/Landing";
 import Root from "routes/Root";
+import LoadingPage from "routes/LoadingPage";
 
 function App() {
 
@@ -24,7 +25,11 @@ function App() {
         {
           path: "races/:race",
           element: <Race />
-        }
+        },
+        {
+          path: "loading",
+          element: <LoadingPage />
+      }
       ]
     }
   ]);
