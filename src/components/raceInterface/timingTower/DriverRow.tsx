@@ -3,11 +3,12 @@ import NumberedSquare from '../../generic/NumberedSquare'
 
 function DriverRow(props) {
 
-    return <div style={{display: 'inline-flex', alignItems:'center'}}>
+    return <div className="driver-row">
     <NumberedSquare 
         number = {props.driver.position}
         color = "#133663"
-    ></NumberedSquare> 
+        size = "0.6"
+    ></NumberedSquare>
     <Typography marginLeft={1}>{props.driver.name} {Number(props.driver.distance).toFixed(3)} </Typography>
     </div>
 }

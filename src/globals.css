@@ -3,11 +3,6 @@ body {
   background-color: #040b14;
 }
 
-canvas {
-  position:absolute;
-  margin:0;
-}
-
 #error-page {
   display: flex;
   flex-direction: column;

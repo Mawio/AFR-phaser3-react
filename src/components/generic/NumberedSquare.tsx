@@ -5,8 +5,9 @@ function NumberedSquare(props) {
     return <Box sx={{
         backgroundColor: props.color,
         height: 'fit-content',
-        width: 'fit-content'
-    }}><Typography align='center' color={'white'} fontSize={30} marginX={1.4}>{props.number}</Typography></Box>
+        width: 'fit-content',
+        transform: "scale(" + props.size + ")"
+    }}><Typography align='center' color={'white'} fontSize={"30px"} marginX={1.4}>{props.number}</Typography></Box>
 }
 
 export default NumberedSquare
