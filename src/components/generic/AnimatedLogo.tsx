@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./AnimatedLogo.css"
 
 function AnimatedLogo(props) {
