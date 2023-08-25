@@ -24,10 +24,10 @@ function MainEvent() {
   }, []);
 
   return (
-    <>
+    <div className="fade-in">
       <Background />
       <MainTag zoom={zoom} />
-    </>
+    </div>
   );
 }
 

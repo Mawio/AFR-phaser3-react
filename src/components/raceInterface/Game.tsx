@@ -12,7 +12,7 @@ export default class Game extends Component {
       height: window.innerHeight,
       parent: "phaser-container",
       scene: [RaceScene],
-      backgroundColor: '071701',
+      backgroundColor: '040b14',
       plugins: {
         scene: [{
             key: 'rexGestures',
@@ -32,6 +32,6 @@ export default class Game extends Component {
   }
 
   public render() {
-    return <div id="phaser-container" />;
+    return <div className="fade-in" id="phaser-container" />;
   }
 }

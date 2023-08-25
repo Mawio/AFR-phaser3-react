@@ -37,15 +37,12 @@ function Background() {
     trueSize = evaluateSize(width, height)
   };
 
-  // Listening for the window resize event
   useEffect(() => {
     window.addEventListener('resize', resizeHandler);
 
     const videoElement = (document.getElementsByClassName("video-react-video")[0] as HTMLVideoElement)
     if (videoElement) videoElement.onloadeddata = () => { setVideoLoaded(true) }
 
-    // Cleanup function
-    // Remove the event listener when the component is unmounted
     return () => {
       window.removeEventListener('resize', resizeHandler);
     }
