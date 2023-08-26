@@ -9,4 +9,19 @@ canvas {
     align-items: center;
     background-color: white;
     width: 200px;
+    border-left: 1px;
+    border-bottom: 0px;
+    border-top: 0px;
+    border-right: 1px;
+    border-color: #073763;
+    border-style: solid;
+}
+
+@keyframes rowUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+.row-up {
+  animation: rowUp 5000ms ease-in-out;
 }

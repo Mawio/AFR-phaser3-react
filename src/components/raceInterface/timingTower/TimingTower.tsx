@@ -1,26 +1,29 @@
 import { driversSelectors } from '/root/afr/src/store/features/driversSlice'
-import { Paper, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import DriverRow from "./DriverRow"
 import { useSelector } from 'react-redux';
 
+const TIMING_TOWER_HEIGHT = 700
+
+function clamp(number, min, max) {
+  return Math.max(min, Math.min(number, max));
+}
+
 function TimingTower() {
   const drivers = useSelector(driversSelectors.selectAll)
+
+  const rowHeight = clamp(TIMING_TOWER_HEIGHT / drivers.length, 28, 32)
+
   const listDrivers = drivers.map(driver =>
-    <DriverRow key={driver.id} driver={driver} />
+    <DriverRow key={driver.id} driver={driver} height={rowHeight}/>
   );
 
   return (
-    // <Paper style = {{
-    //     position: "absolute",
-    //     margin: 15,
-    //     width: "175px"
-    // }}>
-    <div style={{position: "absolute", margin: 15}}>
+    <div style={{position: "absolute", margin: 15, maxHeight: TIMING_TOWER_HEIGHT}}>
       <Stack spacing={0}>
         {listDrivers}
       </Stack>
     </div>
-    // </Paper>
   );
 }
 

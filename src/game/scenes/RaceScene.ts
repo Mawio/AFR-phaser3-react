@@ -1,5 +1,5 @@
 import DriverHandle from "game/DriverHandle";
-import { updateDistance, addDrivers, driversSelectors} from "../../store/features/driversSlice"
+import { updateTotalDistance, addDrivers, driversSelectors, updatePosition} from "../../store/features/driversSlice"
 import { store } from "../../store/Store"
 import { Scene, GameObjects} from "phaser";
 import Path from "game/Path";
@@ -8,8 +8,8 @@ import $ from "jquery";
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 
 const exampleDrivers = [
-  {id: 0, name: 'Waka', position: 1, distance: 0, totalDistance: 0},
-  {id: 1, name: 'Savoca', position: 2, distance: 0, totalDistance: 0}
+  {id: 0, name: 'Waka', position: 1, previousPosition: 1, distance: 0, totalDistance: 0},
+  {id: 1, name: 'Savoca', position: 2, previousPosition: 2, distance: 0, totalDistance: 0}
 ]
 
 export default class RaceScene extends Scene {
@@ -18,7 +18,6 @@ export default class RaceScene extends Scene {
   private graphics : GameObjects.Graphics
   private driversHandles : DriverHandle[]
   private timeOfPause : number
-  private trackBackground : GameObjects.Sprite
   private rexGestures : GesturesPlugin
 
   constructor() {
@@ -50,13 +49,6 @@ export default class RaceScene extends Scene {
       this.driversHandles.push(new DriverHandle(driver))
     })
 
-    var pinch = this.rexGestures.add.pinch(this);
-    pinch.on('pinch', function (dragScale) {
-      console.log("Pinch")
-      var scaleFactor = dragScale.scaleFactor;
-      this.zoomCameraClamped(this.cameras.main.zoom * scaleFactor - this.cameras.main.zoom);
-    }, this)
-
     this.track.initialize()
     this.path.initialize(this.track.width, this.track.height)
     this.inputHandling()
@@ -68,11 +60,18 @@ export default class RaceScene extends Scene {
     this.graphics.clear()
     this.drawPath()
 
-    this.driversHandles.forEach(driverHandle => {
+    this.driversHandles.forEach((driverHandle, index, driverHandles) => {
       driverHandle.timeline.update(delta)
       const driver = driverHandle.driver
       this.drawCar(this.path.getPoint(driver.distance))
-      store.dispatch(updateDistance({id:driver.id, distance: driver.distance}))
+      if(index > 0) {
+        const previousDriver = driverHandles[index-1].driver
+        if(driver.totalDistance > previousDriver.totalDistance) {
+          store.dispatch(updatePosition({id:driver.id, position: previousDriver.position}))
+          store.dispatch(updatePosition({id:previousDriver.id, position: driver.position}))     
+        }
+      }
+      store.dispatch(updateTotalDistance({id:driver.id, totalDistance: driver.totalDistance}))
     })
   }
 
@@ -119,6 +118,13 @@ export default class RaceScene extends Scene {
         if (!pointer.isDown) return;
         this.moveCameraClamped(new Phaser.Math.Vector2((pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom, (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom))
     });
+
+    var pinch = this.rexGestures.add.pinch(this);
+    pinch.on('pinch', function (dragScale) {
+      console.log("Pinch")
+      var scaleFactor = dragScale.scaleFactor;
+      this.zoomCameraClamped(this.cameras.main.zoom * scaleFactor - this.cameras.main.zoom);
+    }, this)
   }
 
   zoomCameraClamped(amount: number) {

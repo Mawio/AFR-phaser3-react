@@ -2,7 +2,7 @@ class Database
 {
     private static _instance: Database;
     private constructor() {
-        this.lapTimes = new Map<number, number[]>().set(0, [0, 15, 16, 20]).set(1, [1, 14, 21, 15])
+        this.lapTimes = new Map<number, number[]>().set(0, [0, 15, 16, 20]).set(1, [1, 15, 10, 15])
     }
     public static get Instance() { return this._instance || (this._instance = new this()); }
 
