@@ -2,9 +2,13 @@ import Typography from '@mui/material/Typography';
 import NumberedSquare from '../../generic/NumberedSquare'
 
 function Animate({ children, on }) {
-    return (on.position === on.previousPosition)
-      ? <div>{children}</div>
-      : <div className="row-up" key={on.position}>{children}</div>
+    if(on.position < on.previousPosition)
+        return <div className="row-up" key={on.position}>{children}</div>
+    else if(on.position > on.previousPosition) {
+        return <div className="row-down" key={on.position}>{children}</div>
+    } else {
+        return <div>{children}</div>
+    }
   }
 
 function DriverRow(props) {

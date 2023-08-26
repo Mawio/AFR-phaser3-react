@@ -1,5 +1,5 @@
 import DriverHandle from "game/DriverHandle";
-import { updateTotalDistance, addDrivers, driversSelectors, updatePosition} from "../../store/features/driversSlice"
+import { updateTotalDistance, driversSelectors, overtake, getOvertaken, addDrivers} from "../../store/features/driversSlice"
 import { store } from "../../store/Store"
 import { Scene, GameObjects} from "phaser";
 import Path from "game/Path";
@@ -46,7 +46,7 @@ export default class RaceScene extends Scene {
     this.graphics = this.add.graphics()
     const drivers = driversSelectors.selectAll(store.getState())
     drivers.forEach(driver => {
-      this.driversHandles.push(new DriverHandle(driver))
+      this.driversHandles.push(new DriverHandle(driver.id, driver.position, driver.distance, driver.totalDistance))
     })
 
     this.track.initialize()
@@ -60,19 +60,20 @@ export default class RaceScene extends Scene {
     this.graphics.clear()
     this.drawPath()
 
-    this.driversHandles.forEach((driverHandle, index, driverHandles) => {
-      driverHandle.timeline.update(delta)
-      const driver = driverHandle.driver
+    this.driversHandles.forEach((driver, index, drivers) => {
+      driver.updateTimeline(delta)
       this.drawCar(this.path.getPoint(driver.distance))
       if(index > 0) {
-        const previousDriver = driverHandles[index-1].driver
+        const previousDriver = drivers[index-1]
         if(driver.totalDistance > previousDriver.totalDistance) {
-          store.dispatch(updatePosition({id:driver.id, position: previousDriver.position}))
-          store.dispatch(updatePosition({id:previousDriver.id, position: driver.position}))     
+          store.dispatch(overtake({id:driver.id}))
+          store.dispatch(getOvertaken({id:previousDriver.id}))
         }
       }
       store.dispatch(updateTotalDistance({id:driver.id, totalDistance: driver.totalDistance}))
     })
+
+    this.driversHandles.sort((a,b) => - a.totalDistance + b.totalDistance)
   }
 
   drawCar(point: Phaser.Math.Vector2) {

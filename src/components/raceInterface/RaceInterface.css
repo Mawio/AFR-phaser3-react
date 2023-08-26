@@ -23,5 +23,14 @@ canvas {
 }
 
 .row-up {
-  animation: rowUp 5000ms ease-in-out;
+  animation: rowUp 500ms ease-in-out;
+}
+
+@keyframes rowDown {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+
+.row-down {
+  animation: rowDown 500ms ease-in-out;
 }

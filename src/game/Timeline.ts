@@ -1,4 +1,4 @@
-import { Driver } from 'store/features/driversSlice';
+import DriverHandle from './DriverHandle';
 
 export default class Timeline{
     private _lapCounter: number
@@ -10,7 +10,7 @@ export default class Timeline{
     }
 
     private get startingDistance() {
-        return 1 - ((this.target.position - 1) * 0.05)
+        return 1 - ((this.target.startingPosition - 1) * 0.05)
     }
 
     private get lapLength() {
@@ -26,7 +26,7 @@ export default class Timeline{
     }
 
     constructor(
-        private target: Driver,
+        private target: DriverHandle,
         private lapTimes: number[],
     ){
         this._lapCounter = this._totalElapsed = this._elapsed = 0

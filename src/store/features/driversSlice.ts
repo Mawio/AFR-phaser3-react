@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
-import { RootState } from "../Store"
+import store, { RootState } from "../Store"
 
 export type Driver = {id: number, name: string, position: number, previousPosition: number, distance: number, totalDistance: number}
 
@@ -16,13 +16,17 @@ const driversSlice = createSlice({
     updateTotalDistance(state, action) {
       driverAdapter.updateOne(state, {id: action.payload.id, changes: {totalDistance: action.payload.totalDistance}})
     },
-    updatePosition(state, action) {
-      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: state.entities[action.payload.id].position}})
-      driverAdapter.updateOne(state, {id: action.payload.id, changes: {position: action.payload.position}})
+    overtake(state, action) {
+      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: state.entities[action.payload.id].position--}})
+      //driverAdapter.updateOne(state, {id: action.payload.id, changes: {position: state.entities[action.payload.id].position}})
+    },
+    getOvertaken(state, action) {
+      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: state.entities[action.payload.id].position++}})
     }
   }
 })
   
-export const { addDriver, addDrivers, updateTotalDistance, updatePosition} = driversSlice.actions
+export const { addDriver, addDrivers, updateTotalDistance, overtake, getOvertaken} = driversSlice.actions
+
 export const driversSelectors = driverAdapter.getSelectors((state : RootState) => state.drivers)
 export default driversSlice.reducer
