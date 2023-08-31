@@ -1,9 +1,11 @@
 import Phaser from "phaser";
-import RaceScene from "../../game/scenes/RaceScene";
+import RaceScene from "../../game/RaceScene";
 import { Component } from "react";
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 
 export default class Game extends Component {
+  private game: Phaser.Game
+
   componentDidMount() {
     console.log("Creating game...")
     const config: Phaser.Types.Core.GameConfig = {
@@ -23,12 +25,16 @@ export default class Game extends Component {
     }
     };
 
-    new Phaser.Game(config);
+    this.game = new Phaser.Game(config);
     console.log("Game created.")
   }
 
   shouldComponentUpdate() {
     return false;
+  }
+
+  componentWillUnmount() {
+    this.game.destroy(false)
   }
 
   public render() {

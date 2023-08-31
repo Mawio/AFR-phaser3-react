@@ -5,25 +5,19 @@ export default class Timeline{
     private _elapsed: number
     private _totalElapsed: number
 
-    private get duration() {
-        return this.getLapTime(this._lapCounter)
-    }
+    public get currentLap() { return this._lapCounter }
 
-    private get startingDistance() {
-        return 1 - ((this.target.startingPosition - 1) * 0.05)
-    }
+    private get duration() { return this.getLapTime(this._lapCounter) }
 
-    private get lapLength() {
-        return this._lapCounter === 0 ? 1 - this.startingDistance : 1
-    }
+    private get startingDistance() { return 1 - ((this.target.startingPosition - 1) * 0.05) }
 
-    public get hasFinished() {
-        return this._lapCounter === this.lapTimes.length
-    }
+    private get lapLength() { return this._lapCounter === 0 ? 1 - this.startingDistance : 1 }
 
-    getLapTime(lap: number) {
-        return this.lapTimes[lap] * 1000
-    }
+    public get hasFinished() { return this._lapCounter === this.lapTimes.length }
+
+    public get progress() { return this._elapsed / this.duration }
+
+    getLapTime(lap: number) { return this.lapTimes[lap] * 1000 }
 
     constructor(
         private target: DriverHandle,
@@ -67,5 +61,21 @@ export default class Timeline{
             return false
         }
     }
+
+    public getCumulativeTime(lap: number, progress: number) : number {
+        let cumulativeTime = 0;
+
+        this.lapTimes.some((lapTime, index) => {
+            if(index > lap) return true
+            if(index === lap) {
+                cumulativeTime += progress*lapTime
+                return true
+            }
+            cumulativeTime += lapTime
+            return false
+        })
+
+        return cumulativeTime;
+  }
 
 }

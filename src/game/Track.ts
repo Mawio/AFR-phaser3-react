@@ -1,5 +1,5 @@
 import { GameObjects } from "phaser";
-import RaceScene from "./scenes/RaceScene";
+import RaceScene from "./RaceScene";
 
 export default class Track{
     private sprite: GameObjects.Sprite
@@ -9,7 +9,6 @@ export default class Track{
     constructor(scene: RaceScene) {
         this.scene = scene
         scene.load.image('track', "https://i.imgur.com/1Uyxnrn.jpg")
-
     }
 
     public initialize(): void {

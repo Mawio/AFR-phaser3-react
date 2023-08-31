@@ -1,6 +1,6 @@
 import { GameObjects } from "phaser"
 import path from "./path_json"
-import RaceScene from "./scenes/RaceScene"
+import RaceScene from "./RaceScene"
 
 export default class Path{
     private path : Phaser.Curves.Path
@@ -12,6 +12,10 @@ export default class Path{
     constructor(scene: RaceScene) {
         this.scene = scene
         scene.load.json('track1', path)
+    }
+
+    public get length() {
+        return this.path.getLength()
     }
 
     public initialize(width: number, height: number) : void {

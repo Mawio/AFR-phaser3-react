@@ -13,6 +13,8 @@ function Animate({ children, on }) {
 
 function DriverRow(props) {
 
+    const timingInformation = props.driver.position > 1 ? Number(props.driver.gap).toFixed(3) : "Leader"
+
     return (
     <Animate on={props.driver}>
         <div style={{height: props.height}} className="driver-row">
@@ -21,7 +23,7 @@ function DriverRow(props) {
             color = "#133663"
             size = {20}
         ></NumberedSquare>
-        <Typography marginLeft={3}>{props.driver.name} {Number(props.driver.totalDistance).toFixed(3)} </Typography>
+        <Typography marginLeft={3}>{props.driver.name} {timingInformation} </Typography>
         </div>
     </Animate>
     )
