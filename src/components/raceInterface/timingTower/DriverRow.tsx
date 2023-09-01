@@ -1,5 +1,5 @@
 import Typography from '@mui/material/Typography';
-import NumberedSquare from '../../generic/NumberedSquare'
+import NumberedSquare from '../../NumberedSquare'
 
 function Animate({ children, on }) {
     if(on.position < on.previousPosition)
@@ -13,7 +13,7 @@ function Animate({ children, on }) {
 
 function DriverRow(props) {
 
-    const timingInformation = props.driver.position > 1 ? Number(props.driver.gap).toFixed(3) : "Leader"
+    const timingInformation = props.driver.position > 1 ? isNaN(Number(props.driver.gap))? "" : Number(props.driver.gap).toFixed(3) : "Leader"
 
     return (
     <Animate on={props.driver}>

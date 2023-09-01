@@ -1,4 +1,4 @@
-import AnimatedLogo from "components/generic/AnimatedLogo";
+import AnimatedLogo from "components/animatedLogo/AnimatedLogo";
 import { useEffect, useState } from "react";
 
 export default function LoadingPage() {

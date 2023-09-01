@@ -14,6 +14,8 @@ export default class DriverHandle {
     private _totalDistance: number
   ) {
     this.timeline = new Timeline(this, Database.getLaptimes(this._id))
+    var t = this
+    setInterval(function(){t.storeGaps()}, 1000)
   }
 
   public get startingPosition() {return this._startingPosition}
@@ -40,6 +42,9 @@ export default class DriverHandle {
       }
     }
     store.dispatch(updateTotalDistance({ id: this.id, totalDistance: this.totalDistance }))
+  }
+
+  public storeGaps() {
     store.dispatch(updateGap({id: this.id, gap: this.gap}))
     store.dispatch(updateLeader({id: this.id, leader: this.leader}))
   }
