@@ -34,3 +34,12 @@ canvas {
 .row-down {
   animation: rowDown 500ms ease-in-out;
 }
+
+.race-interface-box {
+  position: absolute;
+  background-color: #E8F1FA;
+  opacity: 0.71;
+  border-color: #073763;
+  border-width: 1px;
+  border-style: solid;
+}

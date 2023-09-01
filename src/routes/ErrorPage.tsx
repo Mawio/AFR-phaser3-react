@@ -17,7 +17,7 @@ export default function ErrorPage() {
     }
 
   return (
-    <div id="error-page">
+    <div style={{color: "white", fontWeight: "bold"}} id="error-page">
       <h1>Oops!</h1>
       <p>Sorry, an unexpected error has occurred. Please notify @_mawio on discord including the following error message.</p>
       <p>

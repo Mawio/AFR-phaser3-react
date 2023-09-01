@@ -34,6 +34,5 @@ const driversSlice = createSlice({
 })
   
 export const { addDriver, addDrivers, setDrivers, updateTotalDistance, overtake, getOvertaken, updateGap, updateLeader} = driversSlice.actions
-
 export const driversSelectors = driverAdapter.getSelectors((state : RootState) => state.drivers)
 export default driversSlice.reducer
