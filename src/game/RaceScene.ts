@@ -1,5 +1,5 @@
 import DriverHandle from "game/DriverHandle";
-import { updateTotalDistance, driversSelectors, overtake, getOvertaken, setDrivers, Driver, updateGap, updateLeader} from "../store/features/driversSlice"
+import { driversSelectors, setDrivers, Driver} from "../store/features/driversSlice"
 import { store } from "../store/Store"
 import { Scene, GameObjects } from "phaser";
 import Path from "game/Path";
@@ -20,12 +20,7 @@ export default class RaceScene extends Scene {
   private timeOfPause: number
   private rexGestures: GesturesPlugin
 
-  constructor() {
-    super({
-      key: 'RaceScene'
-    })
-    this.driversHandles = []
-  }
+  constructor() {super({key: 'RaceScene'})}
 
   public get screenCenterX(): number {
     return this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -40,10 +35,10 @@ export default class RaceScene extends Scene {
     this.track = new Track(this)
     this.startListeners()
     store.dispatch(setDrivers(exampleDrivers))
+    this.driversHandles = []
     const drivers = driversSelectors.selectAll(store.getState())
     drivers.forEach(driver => {
       this.driversHandles.push(new DriverHandle(driver.id, driver.position, driver.distance, driver.totalDistance))
-      console.log(driver.totalDistance)
     })
   }
 
@@ -61,23 +56,9 @@ export default class RaceScene extends Scene {
     this.drawPath()
 
     this.driversHandles.forEach((driver, index, drivers) => {
-      driver.updateTimeline(delta)
-      if(index > 0) {
-        const driverInFront = drivers[index - 1]
-        driver.updateGaps(driverInFront, drivers[0])
-        if (driver.totalDistance > driverInFront.totalDistance) {
-          console.log("Overtake")
-          store.dispatch(overtake({ id: driver.id }))
-          store.dispatch(getOvertaken({ id: driverInFront.id }))
-        }
-      }
+      driver.update(delta, index, drivers)
       this.drawCar(this.path.getPoint(driver.distance))
-      store.dispatch(updateTotalDistance({ id: driver.id, totalDistance: driver.totalDistance }))
-      store.dispatch(updateGap({id: driver.id, gap: driver.gap}))
-      store.dispatch(updateLeader({id: driver.id, leader: driver.leader}))
     })
-
-    this.driversHandles.sort((a, b) => - a.totalDistance + b.totalDistance)
   }
 
   drawCar(point: Phaser.Math.Vector2) {
@@ -97,9 +78,7 @@ export default class RaceScene extends Scene {
 
     this.game.events.on('visible', function () {
       const timeLost = Date.now() - this.timeOfPause
-      this.driversHandles.forEach(driverHandle => {
-        driverHandle.timeline.update(timeLost)
-      });
+      this.update(0, timeLost)
     }, this);
 
     $(window).on('resize', () => {

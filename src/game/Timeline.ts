@@ -6,15 +6,11 @@ export default class Timeline{
     private _totalElapsed: number
 
     public get currentLap() { return this._lapCounter }
-
     private get duration() { return this.getLapTime(this._lapCounter) }
-
+    public get totalElapsed() { return this._totalElapsed }
     private get startingDistance() { return 1 - ((this.target.startingPosition - 1) * 0.05) }
-
     private get lapLength() { return this._lapCounter === 0 ? 1 - this.startingDistance : 1 }
-
     public get hasFinished() { return this._lapCounter === this.lapTimes.length }
-
     public get progress() { return this._elapsed / this.duration }
 
     getLapTime(lap: number) { return this.lapTimes[lap] * 1000 }
@@ -40,6 +36,8 @@ export default class Timeline{
             this.target.distance = 1
             if(this.nextLap()) {
                 return this.update(delta)
+            } else {
+                return false
             }
         } else {
             this._totalElapsed += delta
@@ -53,6 +51,7 @@ export default class Timeline{
     }
 
     nextLap(): boolean {
+        this.target.totalDistance = this._lapCounter
         if(++this._lapCounter < this.lapTimes.length) {
             this._elapsed = 0
             this.target.distance = 0

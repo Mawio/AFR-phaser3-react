@@ -5,7 +5,7 @@ function AnimatedLogo(props) {
 
     return (
         <>
-            <img className="centered" alt={"AFR Logo"} src={AFR_logo} style={{ transform: "translate(-50%,-50%) scale(" + (props.zoom * 0.2) + ")" }} />
+            <img className="centered" alt={"AFR Logo"} src={AFR_logo} style={{ opacity: 0.5,transform: "translate(-50%,-50%) scale(" + (props.zoom * 0.2) + ")" }} />
             <svg
                 style={{ transform: "translate(-50%,-50%) scale(" + (props.zoom * 2) + ")" }}
                 className="centered"
