@@ -12,7 +12,7 @@ export default class Track{
     }
 
     public initialize(): void {
-        this.sprite = this.scene.add.sprite(this.scene.screenCenterX, this.scene.screenCenterY, 'track');
+        this.sprite = this.scene.add.sprite(this.scene.screenCenterX, this.scene.screenCenterY, 'track').setInteractive( { useHandCursor: true  } );;
         this.sprite.setDepth(-1)
         this.update()
         this.scene.cameras.main.startFollow(this.sprite)

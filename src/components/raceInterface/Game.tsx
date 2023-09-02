@@ -38,6 +38,6 @@ export default class Game extends Component {
   }
 
   public render() {
-    return <div className="fade-in" id="phaser-container" />;
+    return <div className="fade-in" style={{position:"fixed", top:"0px"}} id="phaser-container" />;
   }
 }

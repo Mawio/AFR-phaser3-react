@@ -1,25 +1,15 @@
 canvas {
-    position:absolute;
-    margin:0;
-    z-index: -1;
-  }
-
-.driver-row{
-    display: inline-flex; 
-    align-items: center;
-    background-color: white;
-    width: 200px;
-    border-left: 1px;
-    border-bottom: 0px;
-    border-top: 0px;
-    border-right: 1px;
-    border-color: #073763;
-    border-style: solid;
+  z-index: -1;
 }
 
 @keyframes rowUp {
-  from { transform: translateY(100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 .row-up {
@@ -27,8 +17,13 @@ canvas {
 }
 
 @keyframes rowDown {
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(0); }
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 .row-down {
@@ -36,10 +31,10 @@ canvas {
 }
 
 .race-interface-box {
-  position: absolute;
-  background-color: #E8F1FA;
-  opacity: 0.71;
+  position: relative;
+  background-color: rgba(232, 241, 250, 0.71);
   border-color: #073763;
   border-width: 1px;
   border-style: solid;
+  border-radius: 10px;
 }
