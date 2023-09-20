@@ -27,7 +27,7 @@ function Background() {
   const resizeHandler = () => {
     const overlay = document.getElementsByClassName("dark-overlay")[0]
     const width = overlay.clientWidth;
-    const height = overlay.clientHeight
+    const height = overlay.clientHeight;
 
     setSize({
       width: width,

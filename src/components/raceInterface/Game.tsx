@@ -10,8 +10,8 @@ export default class Game extends Component {
     console.log("Creating game...")
     const config: Phaser.Types.Core.GameConfig = {
       type: Phaser.AUTO,
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: "100%",
+      height: "100%",
       parent: "phaser-container",
       scene: [RaceScene],
       backgroundColor: '040b14',
@@ -38,6 +38,6 @@ export default class Game extends Component {
   }
 
   public render() {
-    return <div className="fade-in" style={{position:"fixed", top:"0px"}} id="phaser-container" />;
+    return <div className="fade-in" style={{position: "fixed", top: "0px", width: window.innerWidth, height: window.innerHeight}} id="phaser-container" />;
   }
 }

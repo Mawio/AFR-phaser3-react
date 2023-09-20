@@ -8,7 +8,7 @@ function NumberedSquare(props) {
         width: props.size,
         position: "relative",
         left: "10px"
-    }}><Typography className='centered' align='center' color={'white'} fontSize={"18px"}>{props.number}</Typography></Box>
+    }}><Typography className='centered' align='center' color={'white'} fontSize={"26px"}>{props.number}</Typography></Box>
 }
 
 export default NumberedSquare
