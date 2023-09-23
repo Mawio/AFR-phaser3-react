@@ -1,12 +1,12 @@
 import TimingTower from "./timingTower/TimingTower"
 import "./RaceInterface.css"
-import RaceTag from "./RaceTag";
+import Header from "./header/Header";
 
 function RaceInterface() {
 
     return (
         <>
-            <RaceTag />
+            <Header />
             <TimingTower />
         </>
     );

@@ -1,7 +1,3 @@
-canvas {
-  z-index: -1;
-}
-
 @keyframes rowUp {
   from {
     transform: translateY(100%);

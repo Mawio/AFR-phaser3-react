@@ -1,18 +1,26 @@
-interface Race {
+export interface Race {
     location: string,
     name: string,
     series: string, 
     track: string, 
-    weather: string, 
-    week: string, 
-    year: string
+    weather: Weather, 
+    week: integer, 
+    year: integer,
+    currentLap: integer,
+    totalLaps: integer
+}
+
+export interface Weather {
+    information: string,
+    temperature: number,
+    trackTemperature: number
 }
 
 class Database {
     private static _instance: Database;
     private constructor() {
         this.lapTimes = new Map<number, number[]>().set(0, [0, 15, 16, 20]).set(1, [1, 15, 10, 15])
-        this.races = new Map<number, Race>().set(0, {location: "", name: "Liechtenstein Grand Prix", series: "", track: "", weather: "", week: "", year: ""})
+        this.races = new Map<number, Race>().set(0, {currentLap: 0, location: "", name: "Liechtenstein Grand Prix", series: "", track: "", weather: {information: "Moderate Rain", temperature: 37, trackTemperature: 50}, week: 13, year: 1970, totalLaps: 2})
     }
     public static get Instance() { return this._instance || (this._instance = new this()); }
 
