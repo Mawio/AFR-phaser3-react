@@ -26,7 +26,11 @@ function App() {
         {
           path: "loading",
           element: <LoadingPage />
-      }
+        },
+        {
+          path: "error",
+          element: <ErrorPage />
+        }
       ]
     }
   ]);
