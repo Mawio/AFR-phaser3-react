@@ -13,7 +13,7 @@ function RacePage() {
     const { race } = useParams()
     const preloading = usePreloading().preloading
 
-    const url = "https://www.googleapis.com/drive/v2/files?q=title%3D%27" + race + "%27+and+%271I9YFGY5UY2RA5r77bbWZZL9wQdw81G1O%27+in+parents&key=AIzaSyCSuCY4kioEc5zTxW-705J5MOYEJ89DjnE&fields=items(id)"
+    const url = "https://www.googleapis.com/drive/v2/files?q=title%3D%27" + race + "%27+and+%271I9YFGY5UY2RA5r77bbWZZL9wQdw81G1O%27+in+parents&key=" + process.env.REACT_APP_GOOGLE_API_KEY + "&fields=items(id)"
     const [sheetID, setSheetID] = useState("")
     const [loading, setLoading] = useState(true)
 
