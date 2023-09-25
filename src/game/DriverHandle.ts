@@ -26,7 +26,7 @@ export default class DriverHandle {
   public get leader() {return this._leader}
   public get totalElapsed() { return this.timeline.totalElapsed }
 
-  public set distance(distance: number) {this._distance = distance}
+  public set distance(newDistance: number) {this._distance = newDistance}
   public set totalDistance(totalDistance: number) {this._totalDistance = totalDistance}
 
   public update(delta: number , index: number, drivers: DriverHandle[]) {

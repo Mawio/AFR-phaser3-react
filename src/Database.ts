@@ -66,8 +66,9 @@ class Database {
         var raceID : number = -1
         var drivers : Driver[] = []
         results.forEach(element => {
-            if(raceID !== element.raceID) {
+            if(raceID !== +element.raceID) {
                 if(drivers.length !== 0) {
+                    
                     this.drivers.set(raceID, drivers)
                     drivers = []
                 }
@@ -79,7 +80,8 @@ class Database {
 
     public parseLapTimes(lapTimes): void {
 
-        let temporaryArrays = {}
+        const temporaryArrays = {}
+
         const driverIDs = Object.keys(lapTimes[0]).map(s => Number(s))
 
         driverIDs.forEach(driverID => {
@@ -90,8 +92,9 @@ class Database {
 
         lapTimes.forEach(element => {
             driverIDs.forEach(driverID => {
-                temporaryArrays[driverID][counter++] = element[driverID]
+                temporaryArrays[driverID][counter] = element[driverID]
             });
+            counter++
         });
 
         driverIDs.forEach(driverID => {

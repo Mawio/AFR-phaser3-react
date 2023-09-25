@@ -14,8 +14,9 @@ export default class RaceScene extends Scene {
   private driversHandles: DriverHandle[]
   private timeOfPause: number
   private rexGestures: GesturesPlugin
+  private hasStarted: boolean
 
-  constructor() {super({key: 'RaceScene'})}
+  constructor() { super({ key: 'RaceScene' }) }
 
   public get screenCenterX(): number {
     return this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -26,6 +27,8 @@ export default class RaceScene extends Scene {
   }
 
   preload() {
+    this.hasStarted = false
+
     this.path = new Path(this)
     this.track = new Track(this)
     this.startListeners()
@@ -35,6 +38,7 @@ export default class RaceScene extends Scene {
     drivers.forEach(driver => {
       this.driversHandles.push(new DriverHandle(driver.id, driver.position, driver.distance, driver.totalDistance))
     })
+    this.hasStarted = true
   }
 
   create() {
@@ -50,10 +54,11 @@ export default class RaceScene extends Scene {
     this.graphics.clear()
     this.drawPath()
 
-    this.driversHandles.forEach((driver, index, drivers) => {
-      driver.update(delta, index, drivers)
-      this.drawCar(this.path.getPoint(driver.distance))
-    })
+    if (this.hasStarted)
+      this.driversHandles.forEach((driver, index, drivers) => {
+        driver.update(delta, index, drivers)
+        this.drawCar(this.path.getPoint(driver.distance))
+      })
   }
 
   drawCar(point: Phaser.Math.Vector2) {

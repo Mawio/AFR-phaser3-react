@@ -8,7 +8,7 @@ export default class Timeline{
     public get currentLap() { return this._lapCounter }
     private get duration() { return this.getLapTime(this._lapCounter) }
     public get totalElapsed() { return this._totalElapsed }
-    private get startingDistance() { return 1 - ((this.target.startingPosition - 1) * 0.05) }
+    private get startingDistance() : number { return 1 - ((this.target.startingPosition - 1) * 0.05) }
     private get lapLength() { return this._lapCounter === 0 ? 1 - this.startingDistance : 1 }
     public get hasFinished() { return this._lapCounter === this.lapTimes.length }
     public get progress() { return this._elapsed / this.duration }
