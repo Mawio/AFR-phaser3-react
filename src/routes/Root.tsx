@@ -14,13 +14,14 @@ function Root() {
     const { data, loading, error } = useGoogleSheets({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID,
-        sheetsOptions: [{ id: 'flags' }, { id: 'races' }]
+        sheetsOptions: [{ id: 'flags' }, { id: 'races' }, { id: 'results' }]
     });
 
     useEffect(() => {
         if(!loading && !error) {
             Database.parseFlags(data[0].data)
             Database.parseRaces(data[1].data)
+            Database.parseResults(data[2].data)
         }
         setPreloading(loading)
         // eslint-disable-next-line

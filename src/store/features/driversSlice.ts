@@ -1,7 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
 import { RootState } from "../Store"
-
-export type Driver = {id: number, name: string, position: number, previousPosition: number, distance: number, totalDistance: number, gap: number, leader: number, fastestLap: number}
+import { Driver } from 'Database'
 
 export const driverAdapter = createEntityAdapter<Driver>({
   sortComparer: (a,b) => a.position - b.position

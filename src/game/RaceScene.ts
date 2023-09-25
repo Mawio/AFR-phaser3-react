@@ -1,16 +1,11 @@
 import DriverHandle from "game/DriverHandle";
-import { driversSelectors, setDrivers, Driver} from "../store/features/driversSlice"
+import { driversSelectors } from "../store/features/driversSlice"
 import { store } from "../store/Store"
 import { Scene, GameObjects } from "phaser";
 import Path from "game/Path";
 import Track from "game/Track";
 import $ from "jquery";
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
-
-const exampleDrivers: Driver[] = [
-  { id: 0, name: 'Waka', position: 1, previousPosition: 1, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0 },
-  { id: 1, name: 'Savoca', position: 2, previousPosition: 2, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0 }
-]
 
 export default class RaceScene extends Scene {
   private path: Path
@@ -34,7 +29,7 @@ export default class RaceScene extends Scene {
     this.path = new Path(this)
     this.track = new Track(this)
     this.startListeners()
-    store.dispatch(setDrivers(exampleDrivers))
+
     this.driversHandles = []
     const drivers = driversSelectors.selectAll(store.getState())
     drivers.forEach(driver => {
