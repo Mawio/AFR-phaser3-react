@@ -3,6 +3,8 @@ import Game from "components/raceInterface/Game";
 import RaceInterface from "components/raceInterface/RaceInterface";
 import LoadingPage from "routes/LoadingPage";
 import useGoogleSheets from "use-google-sheets";
+import { useLoading } from "./LoadingContext";
+import { useEffect } from "react";
 
 function Race(props) {
 
@@ -12,10 +14,13 @@ function Race(props) {
     sheetsOptions: [{ id: "timing" }]
   });
 
-  if (loading)
-    return <LoadingPage />
+  const { setLoading } = useLoading()
 
-  if (!error) {
+  useEffect(() => {
+    setLoading(loading)
+  }, [loading])
+
+  if (!error && !loading) {
 
     Database.parseLapTimes(data[0].data)
 

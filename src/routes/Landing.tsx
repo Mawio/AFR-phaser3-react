@@ -1,17 +1,13 @@
 import EventSelector from "components/EventSelector";
+import { useLoading } from "components/LoadingContext";
 import MainEvent from "components/mainEvent/MainEvent";
-import { usePreloading } from "./Root";
 import React from "react";
 
 function Landing() {
 
-    if (usePreloading().preloading)
-        return (
-            <div className={"hidden"}>
-                <MainEvent />
-                <EventSelector />
-            </div>
-        );
+    const { setLoading } = useLoading();
+
+    setLoading(false)
 
     return (
         <div>

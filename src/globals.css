@@ -3,14 +3,6 @@ body {
   background-color: #040b14;
 }
 
-#error-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-
 .centered{
   position: absolute;
   top: 50%;
@@ -27,4 +19,12 @@ body {
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+#error-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

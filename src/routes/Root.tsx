@@ -1,52 +1,37 @@
-import { Outlet, useOutletContext } from "react-router-dom";
-import useGoogleSheets from "use-google-sheets";
-import ErrorPage from "./ErrorPage";
-import LoadingPage from "./LoadingPage";
-import Database from "Database";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { createContext } from 'react';
+import { LoadingProvider } from "../components/LoadingContext";
+import DataRoot from "./DataRoot";
 
-type ContextType = { preloading: boolean | null };
+export const zoomContext = createContext(1);
 
 function Root() {
 
-    const [preloading, setPreloading] = React.useState(true);
+    const [zoom, setZoom] = useState<number>(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
 
-    const { data, loading, error } = useGoogleSheets({
-        apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-        sheetId: process.env.REACT_APP_GOOGLE_SHEETS_ID,
-        sheetsOptions: [{ id: 'flags' }, { id: 'races' }, { id: 'results' }]
-    });
-
+    // Listening for the window resize event
     useEffect(() => {
-        if(!loading && !error) {
-            Database.parseFlags(data[0].data)
-            Database.parseRaces(data[1].data)
-            Database.parseResults(data[2].data)
+        // This function updates the state thus re-render components
+        const resizeHandler = () => {
+            setZoom(Math.min(window.innerHeight / 1080, window.innerWidth / 1920));
+        };
+
+        window.addEventListener('resize', resizeHandler);
+
+        // Cleanup function
+        // Remove the event listener when the component is unmounted
+        return () => {
+            window.removeEventListener('resize', resizeHandler);
         }
-        setPreloading(loading)
-        // eslint-disable-next-line
-    }, [loading])
-
-    if (preloading) {
-        return (
-            <>
-                <Outlet context={{preloading: preloading} satisfies ContextType}/>
-                <LoadingPage />
-            </>
-        )
-    }
-
-    if (error) {
-        return <ErrorPage />;
-    }
+    }, []);
 
     return (
-        <Outlet context={{preloading: preloading} satisfies ContextType}/>
-    );
+        <LoadingProvider>
+            <zoomContext.Provider value={zoom}>
+                <DataRoot />
+            </zoomContext.Provider>
+        </LoadingProvider>
+    )
 }
 
 export default Root
-
-export function usePreloading() {
-    return useOutletContext<ContextType>();
-  }
