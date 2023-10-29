@@ -92,7 +92,7 @@ class Database {
 
         lapTimes.forEach(element => {
             driverIDs.forEach(driverID => {
-                temporaryArrays[driverID][counter] = element[driverID]
+                temporaryArrays[driverID][counter] = element[driverID] - (temporaryArrays[driverID][counter-1] ?? 0)
             });
             counter++
         });

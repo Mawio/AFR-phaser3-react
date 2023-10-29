@@ -10,10 +10,10 @@ import { setDrivers } from "store/features/driversSlice";
 
 function RacePage() {
 
-    const { race } = useParams()
+    const { raceID } = useParams()
     const preloading = usePreloading().preloading
 
-    const url = "https://www.googleapis.com/drive/v2/files?q=title%3D%27" + race + "%27+and+%271I9YFGY5UY2RA5r77bbWZZL9wQdw81G1O%27+in+parents&key=" + process.env.REACT_APP_GOOGLE_API_KEY + "&fields=items(id)"
+    const url = "https://www.googleapis.com/drive/v2/files?q=title%3D%27" + raceID + "%27+and+%271I9YFGY5UY2RA5r77bbWZZL9wQdw81G1O%27+in+parents&key=" + process.env.REACT_APP_GOOGLE_API_KEY + "&fields=items(id)"
     const [sheetID, setSheetID] = useState("")
     const [loading, setLoading] = useState(true)
 
@@ -29,14 +29,19 @@ function RacePage() {
             }
 
             const data = await response.json()
-            const id = data["items"][0]["id"]
 
-            if(!id) throw new Error("Unable to find race number: " + race)
+            let id : string;
+
+            try{
+                id = data["items"][0]["id"]
+            } catch(err) {
+                throw new Error("Unable to find race number: " + raceID)
+            }
 
             setSheetID(id)
 
-            store.dispatch(setRace(Database.getRace(Number(race))))
-            store.dispatch(setDrivers(Database.getDrivers(Number(race))))
+            store.dispatch(setRace(Database.getRace(Number(raceID))))
+            store.dispatch(setDrivers(Database.getDrivers(Number(raceID))))
 
             setLoading(false)
         }
@@ -45,7 +50,7 @@ function RacePage() {
             .catch((err) => {
                 throw new Error(err)
             })
-    }, [race, url, preloading]);
+    }, [raceID, url, preloading]);
 
     if (preloading)
         return <></>

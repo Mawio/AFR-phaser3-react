@@ -20,7 +20,7 @@ function App() {
           element: <Landing />
         },
         {
-          path: "races/:race",
+          path: "races/:raceID",
           element: <RacePage />
         },
         {
