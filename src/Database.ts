@@ -1,3 +1,6 @@
+import { PreparsedLaptime } from "components/Race";
+import { PreparsedRace, PreparsedResult } from "routes/DataRoot";
+
 export interface Race {
     location: string,
     name: string,
@@ -44,6 +47,7 @@ class Database {
         this.lapTimes = new Map<number, number[]>().set(0, [0, 15, 16, 20]).set(1, [1, 15, 10, 15])
         this.races = new Map<number, Race>().set(0, {currentLap: 0, location: "", name: "Liechtenstein Grand Prix", series: "", track: "", weather: {information: "Moderate Rain", temperature: 37, trackTemperature: 50}, week: 13, year: 1970, totalLaps: 2})
         this.drivers = new Map<number, Driver[]>().set(0, exampleDrivers)
+        this.flags = []
     }
     public static get Instance() { return this._instance || (this._instance = new this()); }
 
@@ -52,17 +56,17 @@ class Database {
     private drivers: Map<number, Driver[]>
     private lapTimes: Map<number, number[]>
 
-    public parseFlags(flags): void {
+    public parseFlags(flags: { url: string, location: string }[]): void {
         this.flags = flags
     }
 
-    public parseRaces(races): void {
-        races.forEach(race => {
+    public parseRaces(races: PreparsedRace[]): void {
+        races.forEach((race : PreparsedRace) => {
             this.races.set(race.raceID, {location: race.location, name: race.name, series: race.series, track: race.track, weather: {information: race.weather}, week: Number(race.week), year: Number(race.year)})
         });
     }
 
-    public parseResults(results): void {
+    public parseResults(results: PreparsedResult[]): void {
         var raceID : number = -1
         var drivers : Driver[] = []
         results.forEach(element => {
@@ -78,9 +82,9 @@ class Database {
         });
     }
 
-    public parseLapTimes(lapTimes): void {
+    public parseLapTimes(lapTimes : PreparsedLaptime[]): void {
 
-        const temporaryArrays = {}
+        const temporaryArrays : Record<number, number[]> = {}
 
         const driverIDs = Object.keys(lapTimes[0]).map(s => Number(s))
 
@@ -106,18 +110,21 @@ class Database {
         if(!this.lapTimes.get(driverID)) {
             throw new Error("unable to find laptimes for driver number: " + driverID)
         }
-        return this.lapTimes.get(driverID)
+        return this.lapTimes.get(driverID)!
     }
 
     public getRace(raceID: number) : Race {
-        return this.races.get(raceID)
+        if(!this.races.get(raceID)) {
+            throw new Error("unable to find race with number: " + raceID)
+        }
+        return this.races.get(raceID)!
     }
     
     public getDrivers(raceID: number) : Driver[] {
         if(!this.drivers.get(raceID)) {
             throw new Error("unable to find drivers for race number: " + raceID)
         }
-        return this.drivers.get(raceID)
+        return this.drivers.get(raceID)!
     }
 }
 

@@ -1,6 +1,6 @@
 import "./AnimatedLogo.css"
 
-function AnimatedLogo(props) {
+function AnimatedLogo(props: {zoom: number}) {
     const AFR_logo = require('../../assets/AFRlogo.png');
 
     return (

@@ -1,15 +1,17 @@
-import { createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useState } from "react";
 
-const LoadingContext = createContext({
-  loading: false,
-  setLoading: null,
-});
+export type LoadingContextType = {
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+};
 
-export function LoadingProvider({ children }) {
+const LoadingContext = createContext<LoadingContextType | null>(null);
+
+export function LoadingProvider(props: PropsWithChildren) {
   const [loading, setLoading] = useState(true);
   const value = { loading, setLoading };
   return (
-    <LoadingContext.Provider value={value}>{children}</LoadingContext.Provider>
+    <LoadingContext.Provider value={value}>{props.children}</LoadingContext.Provider>
   );
 }
 

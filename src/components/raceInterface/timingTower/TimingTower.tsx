@@ -7,7 +7,7 @@ import Bottom from './Bottom';
 
 const TIMING_TOWER_HEIGHT = 700
 
-function clamp(number, min, max) {
+function clamp(number: number, min: number, max: number) {
   return Math.max(min, Math.min(number, max));
 }
 

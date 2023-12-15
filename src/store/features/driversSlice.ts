@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit'
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from "../Store"
 import { Driver } from 'Database'
 
@@ -16,12 +16,15 @@ const driversSlice = createSlice({
     updateTotalDistance(state, action) {
       driverAdapter.updateOne(state, {id: action.payload.id, changes: {totalDistance: action.payload.totalDistance}})
     },
-    overtake(state, action) {
-      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: state.entities[action.payload.id].position--}})
-      //driverAdapter.updateOne(state, {id: action.payload.id, changes: {position: state.entities[action.payload.id].position}})
+    overtake(state, action: PayloadAction<{id: number}>) {
+      const driver = state.entities[action.payload.id]
+      if(driver != undefined)
+      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: driver.position--}})
     },
     getOvertaken(state, action) {
-      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: state.entities[action.payload.id].position++}})
+      const driver = state.entities[action.payload.id]
+      if(driver != undefined)
+      driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: driver.position++}})
     },
     updateGap(state, action) {
       driverAdapter.updateOne(state, {id: action.payload.id, changes: {gap: action.payload.gap}})

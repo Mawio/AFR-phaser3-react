@@ -8,6 +8,8 @@ export default class Track{
 
     constructor(scene: RaceScene) {
         this.scene = scene
+        this._scale = 1
+        this.sprite = 
         scene.load.image('track', "https://i.imgur.com/1Uyxnrn.jpg")
     }
 
