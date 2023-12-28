@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 
-function NumberedSquare(props) {
+function NumberedSquare(props: {color: string, number: number, size: number}) {
     return <Box sx={{
         backgroundColor: props.color,
         height: props.size,

@@ -3,10 +3,10 @@ import path from "./path_json"
 import RaceScene from "./RaceScene"
 
 export default class Path{
-    private path : Phaser.Curves.Path
-    private _scale: number
-    private center: {x: number, y: number}
-    private position: {x: number, y: number}
+    private path! : Phaser.Curves.Path
+    private _scale: number = 1
+    private center!: {x: number, y: number}
+    private position!: {x: number, y: number}
     private scene: RaceScene
     
     constructor(scene: RaceScene) {

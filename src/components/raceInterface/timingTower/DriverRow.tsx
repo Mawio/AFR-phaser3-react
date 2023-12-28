@@ -12,6 +12,7 @@ function Animate(props: PropsWithChildren<{driver: Driver}>) {
     } else {
         return <div>{props.children}</div>
     }
+    else return <></>
 }
 
 function DriverRow(props: {driver: Driver, height: number}) {

@@ -5,8 +5,8 @@ import { getOvertaken, overtake, updateGap, updateLeader, updateTotalDistance } 
 
 export default class DriverHandle {
   private timeline: Timeline
-  private _gap: number
-  private _leader: number
+  private _gap: number = 0
+  private _leader: number = 0
   constructor(
     private _id: number,
     private _startingPosition: number,

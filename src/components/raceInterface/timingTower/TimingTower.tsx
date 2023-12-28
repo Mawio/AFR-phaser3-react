@@ -1,9 +1,10 @@
-import { driversSelectors } from '/root/afr/src/store/features/driversSlice'
 import { Stack } from '@mui/material'
 import DriverRow from "./DriverRow"
 import { useSelector } from 'react-redux';
 import Top from './Top';
 import Bottom from './Bottom';
+import { Driver } from 'Database';
+import { driversSelectors } from 'store/features/driversSlice';
 
 const TIMING_TOWER_HEIGHT = 700
 
@@ -12,7 +13,7 @@ function clamp(number: number, min: number, max: number) {
 }
 
 function  TimingTower() {
-  const drivers = useSelector(driversSelectors.selectAll)
+  const drivers = useSelector(driversSelectors.selectAll) as Driver[]
 
   const rowHeight = clamp(TIMING_TOWER_HEIGHT / drivers.length, 28, 32)
 

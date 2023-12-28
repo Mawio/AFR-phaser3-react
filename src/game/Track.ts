@@ -2,14 +2,13 @@ import { GameObjects } from "phaser";
 import RaceScene from "./RaceScene";
 
 export default class Track{
-    private sprite: GameObjects.Sprite
+    private sprite!: GameObjects.Sprite
     private _scale: number
     private scene: RaceScene
 
     constructor(scene: RaceScene) {
         this.scene = scene
         this._scale = 1
-        this.sprite = 
         scene.load.image('track', "https://i.imgur.com/1Uyxnrn.jpg")
     }
 

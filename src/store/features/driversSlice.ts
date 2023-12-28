@@ -18,12 +18,12 @@ const driversSlice = createSlice({
     },
     overtake(state, action: PayloadAction<{id: number}>) {
       const driver = state.entities[action.payload.id]
-      if(driver != undefined)
+      if(driver !== undefined)
       driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: driver.position--}})
     },
     getOvertaken(state, action) {
       const driver = state.entities[action.payload.id]
-      if(driver != undefined)
+      if(driver !== undefined)
       driverAdapter.updateOne(state, {id: action.payload.id, changes: {previousPosition: driver.position++}})
     },
     updateGap(state, action) {

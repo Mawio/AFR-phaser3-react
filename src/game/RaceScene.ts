@@ -6,17 +6,25 @@ import Path from "game/Path";
 import Track from "game/Track";
 import $ from "jquery";
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
+import Pinch from "phaser3-rex-plugins/plugins/input/gestures/pinch/Pinch";
 
 export default class RaceScene extends Scene {
-  private path: Path
-  private track: Track
-  private graphics: GameObjects.Graphics
+  private path!: Path
+  private track!: Track
+  private graphics!: GameObjects.Graphics
   private driversHandles: DriverHandle[]
-  private timeOfPause: number
-  private rexGestures: GesturesPlugin
-  private hasStarted: boolean
+  private timeOfPause!: number
+  private rexGestures!: GesturesPlugin
+  private hasStarted: boolean = false
 
-  constructor() { super({ key: 'RaceScene' }) }
+  constructor() { 
+    super({ key: 'RaceScene' }) 
+    this.driversHandles = []
+    const drivers = driversSelectors.selectAll(store.getState())
+    drivers.forEach(driver => {
+      this.driversHandles.push(new DriverHandle(driver.id, driver.position, driver.distance || 0, driver.totalDistance || 0))
+    })
+  }
 
   public get screenCenterX(): number {
     return this.cameras.main.worldView.x + this.cameras.main.width / 2;
@@ -33,11 +41,6 @@ export default class RaceScene extends Scene {
     this.track = new Track(this)
     this.startListeners()
 
-    this.driversHandles = []
-    const drivers = driversSelectors.selectAll(store.getState())
-    drivers.forEach(driver => {
-      this.driversHandles.push(new DriverHandle(driver.id, driver.position, driver.distance, driver.totalDistance))
-    })
     this.hasStarted = true
   }
 
@@ -50,7 +53,7 @@ export default class RaceScene extends Scene {
     this.moveCameraClamped(new Phaser.Math.Vector2(0, 0))
   }
 
-  update(time, delta) {
+  update(time: number, delta: number) {
     this.graphics.clear()
     this.drawPath()
 
@@ -72,11 +75,11 @@ export default class RaceScene extends Scene {
   }
 
   startListeners() {
-    this.game.events.on('hidden', function () {
+    this.game.events.on('hidden', () => {
       this.timeOfPause = Date.now()
     }, this);
 
-    this.game.events.on('visible', function () {
+    this.game.events.on('visible', () => {
       const timeLost = Date.now() - this.timeOfPause
       this.update(0, timeLost)
     }, this);
@@ -93,18 +96,18 @@ export default class RaceScene extends Scene {
   }
 
   inputHandling() {
-    this.input.on("wheel", (pointer, gameObjects, deltaX, deltaY, deltaZ) => {
+    this.input.on("wheel", (pointer: any, gameObjects: any, deltaX: any, deltaY: number, deltaZ: any) => {
       this.zoomCameraClamped(-Math.sign(deltaY) * .075)
       this.moveCameraClamped(new Phaser.Math.Vector2(0, 0))
     });
 
-    this.input.on('pointermove', (pointer) => {
+    this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       if (!pointer.isDown) return;
       this.moveCameraClamped(new Phaser.Math.Vector2((pointer.x - pointer.prevPosition.x) / this.cameras.main.zoom, (pointer.y - pointer.prevPosition.y) / this.cameras.main.zoom))
     });
 
     var pinch = this.rexGestures.add.pinch(this);
-    pinch.on('pinch', function (dragScale) {
+    pinch.on('pinch', (dragScale: Pinch) => {
       console.log("Pinch")
       var scaleFactor = dragScale.scaleFactor;
       this.zoomCameraClamped(this.cameras.main.zoom * scaleFactor - this.cameras.main.zoom);

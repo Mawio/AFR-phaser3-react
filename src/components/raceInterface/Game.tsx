@@ -4,7 +4,7 @@ import { Component } from "react";
 import GesturesPlugin from 'phaser3-rex-plugins/plugins/gestures-plugin.js';
 
 export default class Game extends Component {
-  private game: Phaser.Game
+  private game!: Phaser.Game
 
   componentDidMount() {
     console.log("Creating game...")

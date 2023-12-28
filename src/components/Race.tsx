@@ -23,7 +23,7 @@ function Race(props: {sheetID: string}) {
 
   useEffect(() => {
     setLoading(loading)
-  }, [loading])
+  }, [loading, setLoading])
 
   if (!error && !loading) {
 

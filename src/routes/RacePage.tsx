@@ -44,11 +44,8 @@ function RacePage() {
             store.dispatch(setDrivers(Database.getDrivers(Number(raceID))))
         }
 
-        getSpreadsheetId()
-            .catch((err) => {
-                throw new Error(err)
-            })
-    }, [raceID, url]);
+        getSpreadsheetId();
+    }, [raceID, url, setLoading]);
 
     return (
         <>

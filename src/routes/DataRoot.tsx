@@ -34,7 +34,7 @@ export interface PreparsedResult{
 
 function DataRoot() {
 
-    const { loading: g_loading, setLoading } = useLoading();
+    const { loading: g_loading } = useLoading();
 
     if(typeof process.env.REACT_APP_GOOGLE_API_KEY === "undefined") {
         throw new Error("DataRoot: Google API key not found")

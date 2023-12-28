@@ -1,6 +1,5 @@
 - Fix zoom stutter (could be mouse)
 - Maybe rethink the whole rootdata thing, loading thing and hooks in sequence thing by not using hooks and doing manually some await async chaining
-- Complete porting to TS Strict
 - Timing tower
 - Overtakes from more than 1 position
 - Font best practice

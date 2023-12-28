@@ -24,7 +24,7 @@ export default class Timeline{
         this.target.totalDistance = this.startingDistance - 1
     }
 
-    update(delta): boolean {
+    update(delta: number): boolean {
         if(this.hasFinished) return false
 
         const remainingTime = this.duration - this._elapsed
