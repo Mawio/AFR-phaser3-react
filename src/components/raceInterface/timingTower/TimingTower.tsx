@@ -17,7 +17,7 @@ function  TimingTower() {
 
   const rowHeight = clamp(TIMING_TOWER_HEIGHT / drivers.length, 28, 32)
 
-  const listDrivers = drivers.map(driver =>
+  const driversList = drivers.map(driver =>
     <DriverRow key={driver.id} driver={driver} height={rowHeight}/>
   );
 
@@ -25,7 +25,7 @@ function  TimingTower() {
     <div style={{marginTop: "16px", marginLeft: "32px", maxHeight: TIMING_TOWER_HEIGHT}}>
       <Top />
       <Stack spacing={0}>
-        {listDrivers}
+        {driversList}
       </Stack>
       <Bottom />
     </div>

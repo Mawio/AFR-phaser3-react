@@ -4,10 +4,10 @@ import { PreparsedRace, PreparsedResult } from "routes/DataRoot";
 export interface Race {
     location: string,
     name: string,
-    series: string, 
-    track: string, 
-    weather: Weather, 
-    week: integer, 
+    series: string,
+    track: string,
+    weather: Weather,
+    week: integer,
     year: integer,
     currentLap?: integer,
     totalLaps?: integer
@@ -20,14 +20,15 @@ export interface Weather {
 }
 
 export interface Driver {
-    id: number, 
-    name: string, 
-    position: number, 
-    previousPosition?: number, 
-    distance?: number, 
-    totalDistance?: number, 
-    gap?: number, 
-    leader?: number, 
+    id: number,
+    name: string,
+    position: number,
+    displayName: string,
+    previousPosition?: number,
+    distance?: number,
+    totalDistance?: number,
+    gap?: number,
+    leader?: number,
     fastestLap?: number,
     team: string,
     engine: string,
@@ -37,8 +38,8 @@ export interface Driver {
 }
 
 const exampleDrivers: Driver[] = [
-    { id: 0, name: 'Waka', position: 1, previousPosition: 1, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0, team: "Team", engine: "Engine", color1: "#000000", color2: "#FFFFFF", tire: "Tire"},
-    { id: 1, name: 'Savoca', position: 2, previousPosition: 2, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0, team: "Team", engine: "Engine", color1: "#000000", color2: "#FFFFFF", tire: "Tire" }
+    { id: 0, name: 'Waka', displayName: 'Waka', position: 1, previousPosition: 1, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0, team: "Team", engine: "Engine", color1: "#000000", color2: "#FFFFFF", tire: "Tire"},
+    { id: 1, name: 'Savoca', displayName: 'Savoca', position: 2, previousPosition: 2, distance: 0, totalDistance: 0, gap: 0, leader: 0, fastestLap: 0, team: "Team", engine: "Engine", color1: "#000000", color2: "#FFFFFF", tire: "Tire" }
   ]
 
 class Database {
@@ -62,7 +63,7 @@ class Database {
 
     public parseRaces(races: PreparsedRace[]): void {
         races.forEach((race : PreparsedRace) => {
-            this.races.set(race.raceID, {location: race.location, name: race.name, series: race.series, track: race.track, weather: {information: race.weather}, week: Number(race.week), year: Number(race.year)})
+            this.races.set(+race.raceID, {location: race.location, name: race.name, series: race.series, track: race.track, weather: {information: race.weather}, week: Number(race.week), year: Number(race.year)})
         });
     }
 
@@ -72,13 +73,13 @@ class Database {
         results.forEach(element => {
             if(raceID !== +element.raceID) {
                 if(drivers.length !== 0) {
-                    
                     this.drivers.set(raceID, drivers)
                     drivers = []
                 }
                 raceID = Number(element.raceID)
             }
-            drivers.push({id: Number(element.number), name: element.driver, position: Number(element.q), team: element.team, tire: element.tire, engine: element.engine, color1: element.color1, color2: element.color2})
+            var displayName = element.driver.split(' ').slice(1).join(' ')
+            drivers.push({id: Number(element.number), name: element.driver, displayName, position: Number(element.q), team: element.team, tire: element.tire, engine: element.engine, color1: element.color1, color2: element.color2})
         });
     }
 
@@ -115,11 +116,11 @@ class Database {
 
     public getRace(raceID: number) : Race {
         if(!this.races.get(raceID)) {
-            throw new Error("unable to find race with number: " + raceID)
+            throw new Error("unable to find race data with number: " + raceID)
         }
         return this.races.get(raceID)!
     }
-    
+
     public getDrivers(raceID: number) : Driver[] {
         if(!this.drivers.get(raceID)) {
             throw new Error("unable to find drivers for race number: " + raceID)

@@ -5,14 +5,15 @@ import { PropsWithChildren } from 'react';
 
 function Animate(props: PropsWithChildren<{driver: Driver}>) {
     if(typeof props.driver.previousPosition === "number")
-    if (props.driver.position < props.driver.previousPosition)
-        return <div className="row-up" key={props.driver.position}>{props.children}</div>
-    else if (props.driver.position > props.driver.previousPosition) {
-        return <div className="row-down" key={props.driver.position}>{props.children}</div>
-    } else {
-        return <div>{props.children}</div>
-    }
-    else return <></>
+        if (props.driver.position < props.driver.previousPosition)
+            return <div className="row-up" key={props.driver.position}>{props.children}</div>
+        else if (props.driver.position > props.driver.previousPosition) {
+            return <div className="row-down" key={props.driver.position}>{props.children}</div>
+        } else {
+            return <div>{props.children}</div>
+        }
+    else return <div>{props.children}</div>
+
 }
 
 function DriverRow(props: {driver: Driver, height: number}) {
@@ -28,7 +29,7 @@ function DriverRow(props: {driver: Driver, height: number}) {
                         color="#133663"
                         size={26}
                     ></NumberedSquare>
-                    <Typography fontSize={"24px"} color={"#133663"} marginLeft={3}>{props.driver.name}</Typography>
+                    <Typography fontSize={"24px"} color={"#133663"} marginLeft={3}>{props.driver.displayName}</Typography>
                 </div>
                 <div style={{ alignItems: 'center', display: "flex", flexDirection: "row", position: "relative", background: "rgba(207, 226, 243, 0.71)", height: props.height, width: 130, borderRight: "solid 1px #073763" }}>
                     <Typography marginLeft={3}> {timingInformation} </Typography>

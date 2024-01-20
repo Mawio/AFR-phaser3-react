@@ -17,8 +17,8 @@ export default class RaceScene extends Scene {
   private rexGestures!: GesturesPlugin
   private hasStarted: boolean = false
 
-  constructor() { 
-    super({ key: 'RaceScene' }) 
+  constructor() {
+    super({ key: 'RaceScene' })
     this.driversHandles = []
     const drivers = driversSelectors.selectAll(store.getState())
     drivers.forEach(driver => {

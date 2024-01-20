@@ -4,7 +4,7 @@
 - Overtakes from more than 1 position
 - Font best practice
 
-Suggestions
+# Suggestions
 
 - Inlcude lap that events happen on in log
 - Use full driver names and both team colors in timing column for easier identification
@@ -15,4 +15,4 @@ Suggestions
 - More starting grid information in the prelude
 - Podium after the race
 
-56 color
+Black: 56
